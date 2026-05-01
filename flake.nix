@@ -1,5 +1,5 @@
 {
-  description = "lingSDDM - Optimized SDDM theme featuring the Rei theme";
+  description = "lingSDDM - Optimized SDDM theme";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";

@@ -2,74 +2,9 @@
 > This theme requires **SDDM v0.21.0 or newer**. Make sure your distro provides the correct version before installing.
 
 > [!IMPORTANT]
-> Want lingSDDM to also be available as a lockscreen service? Take a look into [this discussion](https://github.com/uiriansan/lingSDDM/discussions/78).
+> Want lingSDDM to also be available as a lockscreen service? Take a look into [this discussion](https://github.com/imtraf/ling-sddm/discussions/78).
 
 https://github.com/user-attachments/assets/dd63c526-34d6-45ec-8a7d-5c29bf08c702
-
-# Presets
-
-<details>
-  <summary>configs/default.conf</summary>
-
-https://github.com/user-attachments/assets/3a03e859-c6b9-4c4b-bf7f-ab610b94eb28
-
-</details>
-
-<details>
-  <summary>configs/rei.conf</summary>
-
-https://github.com/user-attachments/assets/adc9491c-5078-4fb3-86ea-9b91be151412
-
-</details>
-
-<details>
-  <summary>configs/ken.conf</summary>
-
-https://github.com/user-attachments/assets/f0538425-c2e6-450e-9f40-d12b7bdbaa86
-
-</details>
-
-<details>
-  <summary>configs/silvia.conf</summary>
-
-https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
-
-</details>
-
-<details>
-  <summary>configs/everforest.conf</summary>
-
-<img width="1920" height="1080" alt="everforest" src="https://github.com/user-attachments/assets/36d64bf2-b05e-44cf-8bcc-f055381b216f" />
-
-
-</details>
-
-<details>
-  <summary>configs/catppuccin-latte.conf</summary>
-<img src="https://github.com/uiriansan/lingSDDM/blob/main/docs/previews/catppuccin-latte.png" width="100%" />
-</details>
-
-<details>
-<summary>configs/catppuccin-frappe.conf</summary>
-<img src="https://github.com/uiriansan/lingSDDM/blob/main/docs/previews/catppuccin-frappe.png" width="100%" />
-</details>
-
-<details>
-  <summary>configs/catppuccin-macchiato.conf</summary>
-<img src="https://github.com/uiriansan/lingSDDM/blob/main/docs/previews/catppuccin-macchiato.png" width="100%" />
-</details>
-
-<details>
-  <summary>configs/catppuccin-mocha.conf</summary>
-<img src="https://github.com/uiriansan/lingSDDM/blob/main/docs/previews/catppuccin-mocha.png" width="100%" />
-</details>
-
-<details>
-  <summary>configs/nord.conf</summary>
-<img src="https://github.com/uiriansan/lingSDDM/blob/main/docs/previews/nord.png" width="100%" />
-</details>
-
-[`Customization guide`](#Customizing)
 
 # Dependencies
 
@@ -86,11 +21,11 @@ https://github.com/user-attachments/assets/c90799f7-52bb-4c90-90db-4890281991c1
 Just clone the repo and run the script:
 
 ```bash
-git clone -b main --depth=1 https://github.com/uiriansan/lingSDDM && cd lingSDDM && ./install.sh
+git clone -b main --depth=1 https://github.com/imtraf/ling-sddm && cd lingSDDM && ./install.sh
 ```
 
 > [!IMPORTANT]
-> Make sure to test the theme before rebooting by running `./test.sh`, otherwise you might end up with a broken login screen. Refer to the [snippets page](https://github.com/uiriansan/lingSDDM/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/uiriansan/lingSDDM/issues/new/choose) if you don't find the solution there.
+> Make sure to test the theme before rebooting by running `./test.sh`, otherwise you might end up with a broken login screen. Refer to the [snippets page](https://github.com/imtraf/ling-sddm/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/imtraf/ling-sddm/issues/new/choose) if you don't find the solution there.
 
 ## AUR packages for Arch
 If you run Arch Linux, consider installing one of the AUR packages:
@@ -121,7 +56,7 @@ cd /usr/share/sddm/themes/silent/
 ./test.sh
 ```
 > [!IMPORTANT]
-> Refer to the [snippets page](https://github.com/uiriansan/lingSDDM/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/uiriansan/lingSDDM/issues/new/choose) if you don't find the solution there.
+> Refer to the [snippets page](https://github.com/imtraf/ling-sddm/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/imtraf/ling-sddm/issues/new/choose) if you don't find the solution there.
 
 
 ## NixOS flake
@@ -161,7 +96,7 @@ For further configuration read the [module](./nix/module.nix) option description
 ### Local development and testing under nix
 First git clone the repository and cd into the resulting directory
 ```bash
-git clone https://github.com/uiriansan/lingSDDM.git
+git clone https://github.com/imtraf/ling-sddm.git
 cd lingSDDM/
 ```
 
@@ -173,7 +108,7 @@ nix run .#test
 ```
 
 > [!IMPORTANT]
-> Refer to the [snippets page](https://github.com/uiriansan/lingSDDM/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/uiriansan/lingSDDM/issues/new/choose) if you don't find the solution there.
+> Refer to the [snippets page](https://github.com/imtraf/ling-sddm/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/imtraf/ling-sddm/issues/new/choose) if you don't find the solution there.
 
 ## Manual installation
 
@@ -205,18 +140,18 @@ sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-
 
 ### 2. Clone this repo:
 ```bash
-git clone -b main --depth=1 https://github.com/uiriansan/lingSDDM
+git clone -b main --depth=1 https://github.com/imtraf/ling-sddm
 cd lingSDDM/
 ```
 > [!NOTE]
-> You can also get the compressed files from the [latest release](https://github.com/uiriansan/lingSDDM/releases/latest).
+> You can also get the compressed files from the [latest release](https://github.com/imtraf/ling-sddm/releases/latest).
 
 ### 3. Test the theme to make sure you have all dependencies:
 ```bash
 ./test.sh
 ```
 > [!IMPORTANT]
-> Refer to the [snippets page](https://github.com/uiriansan/lingSDDM/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/uiriansan/lingSDDM/issues/new/choose) if you don't find the solution there.
+> Refer to the [snippets page](https://github.com/imtraf/ling-sddm/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/imtraf/ling-sddm/issues/new/choose) if you don't find the solution there.
 
 ### 4. Copy the theme to `/usr/share/sddm/themes/`:
 ```bash
@@ -259,12 +194,12 @@ ConfigFile=configs/<your_preferred_config>.conf
 
 <br/>
 
-You can also create your own config file. There's a guide with the list of available options (there are more than 200 of them xD) in the [wiki](https://github.com/uiriansan/lingSDDM/wiki/Customizing).
+You can also create your own config file. There's a guide with the list of available options (there are more than 200 of them xD) in the [wiki](https://github.com/imtraf/ling-sddm/wiki/Customizing).
 
 > [!IMPORTANT]
 > Don't forget to test the theme after every change by running `./test.sh`, otherwise you might end up with a broken login screen.
 
-There are some extra tips on how to customize the theme on the [snippets page](https://github.com/uiriansan/lingSDDM/wiki/Snippets).
+There are some extra tips on how to customize the theme on the [snippets page](https://github.com/imtraf/ling-sddm/wiki/Snippets).
 
 # Acknowledgements
 

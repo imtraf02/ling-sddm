@@ -24,7 +24,7 @@ stdenv.mkDerivation {
   '';
 
   meta = with lib; {
-    description = "Optimized SDDM theme based on SilentSDDM, featuring the Rei theme.";
+    description = "Optimized SDDM theme based on SilentSDDM.";
     homepage = "https://github.com/imtraf/lingSDDM";
     license = licenses.gpl3Plus;
     platforms = platforms.linux;

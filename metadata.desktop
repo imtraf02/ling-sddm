@@ -1,7 +1,7 @@
 ; https://github.com/imtraf/lingSDDM
 
 [SddmGreeterTheme]
-Name=lingSDDM (Rei)
+Name=lingSDDM
 Type=sddm-theme
 Description=Optimized SDDM theme based on SilentSDDM.
 License=GPL-3.0-or-later
