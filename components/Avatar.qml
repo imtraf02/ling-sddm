@@ -5,9 +5,10 @@ import QtQuick.Controls
 Rectangle {
     id: avatar
     property string shape: Config.avatarShape
+    property string username: ""
     property string source: ""
     property bool active: false
-    property int squareRadius: (shape == "circle") ? this.width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius * Config.generalScale) // min: 1
+    property int squareRadius: (shape == "circle") ? width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius * Config.generalScale) // min: 1
     property bool drawStroke: (active && Config.avatarActiveBorderSize > 0) || (!active && Config.avatarInactiveBorderSize > 0)
     property color strokeColor: active ? Config.avatarActiveBorderColor : Config.avatarInactiveBorderColor
     property int strokeSize: active ? (Config.avatarActiveBorderSize * Config.generalScale) : (Config.avatarInactiveBorderSize * Config.generalScale)
@@ -44,21 +45,40 @@ Rectangle {
         verticalAlignment: Image.AlignVCenter
 
         onStatusChanged: {
-            if (status === Image.Error) {
-                // If it's already a .face attempt or we already tried fallback, stop to avoid infinite loop
-                if (source.toString().includes(".face") || source === Config.getIcon("user-default")) {
-                    source = Config.getIcon("user-default");
-                    faceEffects.colorization = 1;
+            console.log("DEBUG: Avatar username:", avatar.username, "status:", status, "source:", avatar.source)
+            
+            var isDefaultSddmFace = avatar.source.toString().includes("/share/sddm/faces/");
+            
+            if (status === Image.Error || status === Image.Null || isDefaultSddmFace) {
+                // If we already tried the home .face and it failed or was loaded, don't try again
+                if (avatar.source.toString().includes("/home/") && avatar.source.toString().includes(".face")) {
+                    if (status === Image.Error) {
+                        avatar.source = Config.getIcon("user-default");
+                        faceEffects.colorization = 1;
+                    }
                     return;
                 }
                 
-                // Try to fallback to ~/.face based on the username if provided by the parent
-                if (avatar.source === "" || avatar.source === undefined) {
-                    // This part depends on how UserSelector passes the source
-                    source = Config.getIcon("user-default");
+                // Try to fallback to ~/.face based on the username
+                if (avatar.username !== "") {
+                    var homeFace = "file:///home/" + avatar.username + "/.face";
+                    if (avatar.source !== homeFace) {
+                        avatar.source = homeFace;
+                    }
+                } else if (status === Image.Error || status === Image.Null) {
+                    avatar.source = Config.getIcon("user-default");
                     faceEffects.colorization = 1;
+                }
+            }
+        }
+
+        Component.onCompleted: {
+            var isDefaultSddmFace = avatar.source.toString().includes("/share/sddm/faces/");
+            if (avatar.source === "" || isDefaultSddmFace) {
+                if (avatar.username !== "") {
+                    avatar.source = "file:///home/" + avatar.username + "/.face";
                 } else {
-                    source = Config.getIcon("user-default");
+                    avatar.source = Config.getIcon("user-default");
                     faceEffects.colorization = 1;
                 }
             }
@@ -91,14 +111,14 @@ Rectangle {
     Item {
         id: faceImageMask
 
-        height: this.width
+        height: width
         layer.enabled: true
         layer.smooth: true
         visible: false
         width: faceImage.width
 
         Rectangle {
-            height: this.width
+            height: width
             radius: avatar.squareRadius
             width: faceImage.width
         }
