@@ -5,7 +5,6 @@ import QtQuick.Controls
 Rectangle {
     id: avatar
     property string shape: Config.avatarShape
-    property string username: ""
     property string source: ""
     property bool active: false
     property int squareRadius: (shape == "circle") ? width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius * Config.generalScale) // min: 1
@@ -45,47 +44,9 @@ Rectangle {
         verticalAlignment: Image.AlignVCenter
 
         onStatusChanged: {
-            console.log("DEBUG: Avatar username:", avatar.username, "status:", status, "source:", avatar.source)
-            
-            var sourceStr = avatar.source.toString();
-            var isDefaultSddmFace = sourceStr.includes("/share/sddm/faces/");
-            var isHomeFace = sourceStr.includes("/home/") && sourceStr.includes(".face");
-            var isAccountsServiceFace = sourceStr.includes("/var/lib/AccountsService/icons/");
-            
-            if (status === Image.Error || status === Image.Null || isDefaultSddmFace) {
-                if (avatar.username !== "") {
-                    var accountsServiceFace = "file:///var/lib/AccountsService/icons/" + avatar.username;
-                    var homeFace = "file:///home/" + avatar.username + "/.face";
-                    
-                    if (!isAccountsServiceFace && !isHomeFace) {
-                        // First fallback: AccountsService (most reliable in NixOS/prod)
-                        avatar.source = accountsServiceFace;
-                    } else if (isAccountsServiceFace && (status === Image.Error || status === Image.Null)) {
-                        // Second fallback: Home .face (might work in some setups/test)
-                        avatar.source = homeFace;
-                    } else if (isHomeFace && (status === Image.Error || status === Image.Null)) {
-                        // Final fallback: Default icon
-                        avatar.source = Config.getIcon("user-default");
-                        faceEffects.colorization = 1;
-                    }
-                } else if (status === Image.Error || status === Image.Null) {
-                    avatar.source = Config.getIcon("user-default");
-                    faceEffects.colorization = 1;
-                }
-            }
-        }
-
-        Component.onCompleted: {
-            var sourceStr = avatar.source.toString();
-            var isDefaultSddmFace = sourceStr.includes("/share/sddm/faces/");
-            if (avatar.source === "" || isDefaultSddmFace) {
-                if (avatar.username !== "") {
-                    // Start with AccountsService as it's more likely to be accessible
-                    avatar.source = "file:///var/lib/AccountsService/icons/" + avatar.username;
-                } else {
-                    avatar.source = Config.getIcon("user-default");
-                    faceEffects.colorization = 1;
-                }
+            if (status === Image.Error) {
+                source = Config.getIcon("user-default");
+                faceEffects.colorization = 1;
             }
         }
 
