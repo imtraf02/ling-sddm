@@ -6,10 +6,23 @@ let
   cfg = config.services.displayManager.sddm.lingSDDM;
   themeName = "default";
   pkg = pkgs.callPackage ./package.nix { };
+
+  users = attrNames config.users.users;
 in
 {
   options.services.displayManager.sddm.lingSDDM = {
     enable = mkEnableOption "lingSDDM SDDM theme";
+    
+    profileIcons = mkOption {
+      type = types.attrsOf types.path;
+      default = { };
+      example = literalExpression ''
+        {
+          imtraf = ./.face;
+        }
+      '';
+      description = "Attrset mapping usernames to their avatar image paths.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -34,5 +47,11 @@ in
     environment.systemPackages = [
       pkg
     ];
+
+    # Setup profile pictures using tmpfiles.rules (the SilentSDDM way)
+    systemd.tmpfiles.rules = flatten (mapAttrsToList (user: icon: [
+      "f+ /var/lib/AccountsService/users/${user}  0600 root root -  [User]\\nIcon=/var/lib/AccountsService/icons/${user}\\n"
+      "L+ /var/lib/AccountsService/icons/${user}  -    -    -    -  ${icon}"
+    ]) (filterAttrs (user: _: elem user users) cfg.profileIcons));
   };
 }

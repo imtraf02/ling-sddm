@@ -45,8 +45,22 @@ Rectangle {
 
         onStatusChanged: {
             if (status === Image.Error) {
-                source = Config.getIcon("user-default");
-                faceEffects.colorization = 1;
+                // If it's already a .face attempt or we already tried fallback, stop to avoid infinite loop
+                if (source.toString().includes(".face") || source === Config.getIcon("user-default")) {
+                    source = Config.getIcon("user-default");
+                    faceEffects.colorization = 1;
+                    return;
+                }
+                
+                // Try to fallback to ~/.face based on the username if provided by the parent
+                if (avatar.source === "" || avatar.source === undefined) {
+                    // This part depends on how UserSelector passes the source
+                    source = Config.getIcon("user-default");
+                    faceEffects.colorization = 1;
+                } else {
+                    source = Config.getIcon("user-default");
+                    faceEffects.colorization = 1;
+                }
             }
         }
 
