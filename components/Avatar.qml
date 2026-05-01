@@ -47,23 +47,26 @@ Rectangle {
         onStatusChanged: {
             console.log("DEBUG: Avatar username:", avatar.username, "status:", status, "source:", avatar.source)
             
-            var isDefaultSddmFace = avatar.source.toString().includes("/share/sddm/faces/");
+            var sourceStr = avatar.source.toString();
+            var isDefaultSddmFace = sourceStr.includes("/share/sddm/faces/");
+            var isHomeFace = sourceStr.includes("/home/") && sourceStr.includes(".face");
+            var isAccountsServiceFace = sourceStr.includes("/var/lib/AccountsService/icons/");
             
             if (status === Image.Error || status === Image.Null || isDefaultSddmFace) {
-                // If we already tried the home .face and it failed or was loaded, don't try again
-                if (avatar.source.toString().includes("/home/") && avatar.source.toString().includes(".face")) {
-                    if (status === Image.Error) {
+                if (avatar.username !== "") {
+                    var accountsServiceFace = "file:///var/lib/AccountsService/icons/" + avatar.username;
+                    var homeFace = "file:///home/" + avatar.username + "/.face";
+                    
+                    if (!isAccountsServiceFace && !isHomeFace) {
+                        // First fallback: AccountsService (most reliable in NixOS/prod)
+                        avatar.source = accountsServiceFace;
+                    } else if (isAccountsServiceFace && (status === Image.Error || status === Image.Null)) {
+                        // Second fallback: Home .face (might work in some setups/test)
+                        avatar.source = homeFace;
+                    } else if (isHomeFace && (status === Image.Error || status === Image.Null)) {
+                        // Final fallback: Default icon
                         avatar.source = Config.getIcon("user-default");
                         faceEffects.colorization = 1;
-                    }
-                    return;
-                }
-                
-                // Try to fallback to ~/.face based on the username
-                if (avatar.username !== "") {
-                    var homeFace = "file:///home/" + avatar.username + "/.face";
-                    if (avatar.source !== homeFace) {
-                        avatar.source = homeFace;
                     }
                 } else if (status === Image.Error || status === Image.Null) {
                     avatar.source = Config.getIcon("user-default");
@@ -73,10 +76,12 @@ Rectangle {
         }
 
         Component.onCompleted: {
-            var isDefaultSddmFace = avatar.source.toString().includes("/share/sddm/faces/");
+            var sourceStr = avatar.source.toString();
+            var isDefaultSddmFace = sourceStr.includes("/share/sddm/faces/");
             if (avatar.source === "" || isDefaultSddmFace) {
                 if (avatar.username !== "") {
-                    avatar.source = "file:///home/" + avatar.username + "/.face";
+                    // Start with AccountsService as it's more likely to be accessible
+                    avatar.source = "file:///var/lib/AccountsService/icons/" + avatar.username;
                 } else {
                     avatar.source = Config.getIcon("user-default");
                     faceEffects.colorization = 1;
