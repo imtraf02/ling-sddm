@@ -1,73 +1,129 @@
 #!/usr/bin/env bash
-green='\033[0;32m'
-red='\033[0;31m'
-bred='\033[1;31m'
-cyan='\033[0;36m'
-grey='\033[2;37m'
-reset="\033[0m"
 
-SHPATH=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-: ${THEMES_DIR:=/usr/share/sddm/themes}
+# lingSDDM Installation Script
+# https://github.com/imtraf/ling-sddm
+
+set -e
+
+# Colors for output
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+CYAN='\033[0;36m'
+YELLOW='\033[1;33m'
+BOLD='\033[1m'
+RESET='\033[0m'
+
 THEME_NAME="lingSDDM"
+THEMES_DIR="/usr/share/sddm/themes"
+FONTS_DIR="/usr/share/fonts"
+SDDM_CONF="/etc/sddm.conf"
+SCRIPT_PATH=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 
-install_dependencies () {
-    if command -v pacman &>/dev/null; then
-        echo -e "${grey}Installing dependencies with 'pacman'...${reset}"
-        sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
-    elif command -v xbps-install &>/dev/null; then
-        echo -e "${grey}Installing dependencies with 'xbps'...${reset}"
-        sudo xbps-install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
-    elif command -v dnf &>/dev/null; then
-        echo -e "${grey}Installing dependencies with 'dnf'...${reset}"
-        sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard qt6-qtmultimedia
-    elif command -v zypper &>/dev/null; then
-        echo -e "${grey}Installing dependencies with 'zypper'...${reset}"
-        sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports qt6-multimedia qt6-multimedia-imports
+echo -e "${CYAN}${BOLD}==>${RESET} ${BOLD}Installing lingSDDM Theme...${RESET}"
+
+# Function to check if a command exists
+command_exists() {
+    command -v "$1" &>/dev/null
+}
+
+# 1. Dependency Installation
+install_dependencies() {
+    echo -e "${CYAN}${BOLD}  ->${RESET} Detecting package manager and installing dependencies..."
+    
+    if command_exists pacman; then
+        sudo pacman -S --needed --noconfirm sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
+    elif command_exists dnf; then
+        sudo dnf install -y sddm qt6-qtsvg qt6-qtvirtualkeyboard qt6-qtmultimedia
+    elif command_exists apt; then
+        sudo apt update
+        sudo apt install -y sddm qml6-module-qtquick-layouts qml6-module-qtquick-controls qml6-module-qtmultimedia qml6-module-qtsvg qml6-module-qtvirtualkeyboard libqt6multimedia6-ffmpeg || \
+        echo -e "${YELLOW}Warning: Some QT6 packages might not be available. Please ensure QT 6.5+ is installed.${RESET}"
+    elif command_exists zypper; then
+        sudo zypper install -y sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports qt6-multimedia qt6-multimedia-imports
+    elif command_exists xbps-install; then
+        sudo xbps-install -Sy sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
     else
-        echo -e "\n${red}Could not install dependencies!\nDo it manually: ${cyan}https://github.com/imtraf/lingSDDM#dependencies${reset}\n"
-        return 1
+        echo -e "${YELLOW}Unknown package manager. Please ensure SDDM (QT6) and its dependencies are installed manually.${RESET}"
     fi
 }
 
-copy_files () {
-    echo -e "${grey}Copying files from '${SHPATH}/' to '${THEMES_DIR}/${THEME_NAME}/'...${reset}"
-    sudo mkdir -p ${THEMES_DIR}/${THEME_NAME}
-    sudo cp -rf "$SHPATH"/. ${THEMES_DIR}/${THEME_NAME}/
+# 2. Copy Theme Files
+copy_theme() {
+    echo -e "${CYAN}${BOLD}  ->${RESET} Copying theme files to ${THEMES_DIR}/${THEME_NAME}..."
+    sudo mkdir -p "${THEMES_DIR}/${THEME_NAME}"
+    sudo cp -rf "${SCRIPT_PATH}"/* "${THEMES_DIR}/${THEME_NAME}/"
+    # Remove unnecessary files from destination
+    sudo rm -f "${THEMES_DIR}/${THEME_NAME}/install.sh"
+    sudo rm -f "${THEMES_DIR}/${THEME_NAME}/README.md"
 }
 
-copy_fonts () {
-    echo -e "${grey}Copying fonts to '/usr/share/fonts/'...${reset}"
-    sudo cp -r ${THEMES_DIR}/${THEME_NAME}/fonts/{redhat,redhat-vf} /usr/share/fonts/
+# 3. Install Fonts
+install_fonts() {
+    echo -e "${CYAN}${BOLD}  ->${RESET} Installing fonts..."
+    sudo mkdir -p "${FONTS_DIR}/lingSDDM"
+    if [ -d "${SCRIPT_PATH}/fonts" ]; then
+        sudo cp -rf "${SCRIPT_PATH}/fonts"/* "${FONTS_DIR}/lingSDDM/"
+        if command_exists fc-cache; then
+            sudo fc-cache -f >/dev/null
+        fi
+    else
+        echo -e "${YELLOW}No fonts directory found, skipping font installation.${RESET}"
+    fi
 }
 
-apply_theme () {
-    echo -e "${grey}Editing '/etc/sddm.conf'...${reset}"
-    if [[ -f /etc/sddm.conf ]]; then
-        sudo cp -f /etc/sddm.conf /etc/sddm.conf.bkp
-        echo -e "${green}Backup for SDDM config saved in '/etc/sddm.conf.bkp'${reset}"
+# 4. Configure SDDM
+configure_sddm() {
+    echo -e "${CYAN}${BOLD}  ->${RESET} Configuring SDDM to use ${THEME_NAME}..."
+    
+    # Backup existing config
+    if [ -f "$SDDM_CONF" ]; then
+        sudo cp "$SDDM_CONF" "${SDDM_CONF}.bak"
+        echo -e "${GREEN}    Backup created at ${SDDM_CONF}.bak${RESET}"
+    fi
 
-        if grep -Pzq '\[Theme\]\nCurrent=' /etc/sddm.conf; then
-            sudo sed -i "/^\[Theme\]$/{N;s/\(Current=\).*/\1${THEME_NAME}/;}" /etc/sddm.conf
+    # Ensure [Theme] and [General] sections exist and set values
+    # Using a temporary file for safer editing
+    TMP_CONF=$(mktemp)
+    
+    # Simple logic to update/add keys
+    if [ -f "$SDDM_CONF" ]; then
+        cp "$SDDM_CONF" "$TMP_CONF"
+    else
+        touch "$TMP_CONF"
+    fi
+
+    # Helper function to set ini value
+    set_ini_value() {
+        local section=$1
+        local key=$2
+        local value=$3
+        local file=$4
+
+        if grep -q "^\[$section\]" "$file"; then
+            if grep -q "^$key=" "$file"; then
+                sudo sed -i "/^\[$section\]/,/^\[/ s|^$key=.*|$key=$value|" "$file"
+            else
+                sudo sed -i "/^\[$section\]/a $key=$value" "$file"
+            fi
         else
-            echo -e "\n[Theme]\nCurrent=${THEME_NAME}" | sudo tee -a /etc/sddm.conf
+            echo -e "\n[$section]\n$key=$value" >> "$file"
         fi
+    }
 
-        if ! grep -Pzq 'InputMethod=qtvirtualkeyboard' /etc/sddm.conf; then
-            echo -e "\n[General]\nInputMethod=qtvirtualkeyboard" | sudo tee -a /etc/sddm.conf
-        fi
+    set_ini_value "Theme" "Current" "$THEME_NAME" "$TMP_CONF"
+    set_ini_value "General" "InputMethod" "qtvirtualkeyboard" "$TMP_CONF"
+    set_ini_value "General" "GreeterEnvironment" "QML2_IMPORT_PATH=${THEMES_DIR}/${THEME_NAME}/components/,QT_IM_MODULE=qtvirtualkeyboard" "$TMP_CONF"
 
-        if ! grep -Pzq "GreeterEnvironment=QML2_IMPORT_PATH=${THEMES_DIR}/${THEME_NAME}/components/,QT_IM_MODULE=qtvirtualkeyboard" /etc/sddm.conf; then
-            echo -e "\n[General]\nGreeterEnvironment=QML2_IMPORT_PATH=${THEMES_DIR}/${THEME_NAME}/components/,QT_IM_MODULE=qtvirtualkeyboard" | sudo tee -a /etc/sddm.conf
-        fi
-    else
-        echo -e "[Theme]\nCurrent=${THEME_NAME}" | sudo tee -a /etc/sddm.conf
-        echo -e "\n[General]\nInputMethod=qtvirtualkeyboard" | sudo tee -a /etc/sddm.conf
-        echo -e "GreeterEnvironment=QML2_IMPORT_PATH=${THEMES_DIR}/${THEME_NAME}/components/,QT_IM_MODULE=qtvirtualkeyboard" | sudo tee -a /etc/sddm.conf
-    fi
+    sudo cp "$TMP_CONF" "$SDDM_CONF"
+    rm "$TMP_CONF"
 }
 
-install_dependencies ;
-copy_files &&
-copy_fonts ;
-apply_theme &&
-echo -e "\n${green} Theme successfully installed!${reset}"
+# Main Execution
+install_dependencies
+copy_theme
+install_fonts
+configure_sddm
+
+echo -e "\n${GREEN}${BOLD}✔ lingSDDM has been successfully installed!${RESET}"
+echo -e "${CYAN}Note:${RESET} You may need to restart your computer or restart the SDDM service to see the changes."
+echo -e "${CYAN}Test the theme with:${RESET} sddm-greeter-qt6 --test-mode --theme ${THEMES_DIR}/${THEME_NAME}"

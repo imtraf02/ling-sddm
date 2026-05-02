@@ -1,213 +1,112 @@
-> [!WARNING]
-> This theme requires **SDDM v0.21.0 or newer**. Make sure your distro provides the correct version before installing.
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/dd63c526-34d6-45ec-8a7d-5c29bf08c702" width="100%" alt="lingSDDM Banner">
+  
+  # 🌙 lingSDDM
+  
+  **A premium, highly customizable, and optimized SDDM theme for modern Linux desktops.**
+  
+  [![NixOS](https://img.shields.io/badge/NixOS-Unstable-blue.svg?logo=nixos&logoColor=white)](https://nixos.org)
+  [![QT6](https://img.shields.io/badge/QT-6.5+-blue.svg?logo=qt&logoColor=white)](https://www.qt.io/)
+  [![License](https://img.shields.io/badge/License-GPL--3.0-green.svg)](LICENSE)
+</div>
 
-> [!IMPORTANT]
-> Want lingSDDM to also be available as a lockscreen service? Take a look into [this discussion](https://github.com/imtraf/ling-sddm/discussions/78).
+---
 
-https://github.com/user-attachments/assets/dd63c526-34d6-45ec-8a7d-5c29bf08c702
+## ✨ Features
 
-# Dependencies
+- 🎥 **Video Backgrounds**: Support for animated backgrounds (MP4, MKV, MOV, etc.).
+- 👤 **Smart User Selector**: Beautifully animated avatar selection with auto-focus.
+- ⌨️ **Virtual Keyboard**: Built-in support for QT Virtual Keyboard.
+- ❄️ **NixOS Optimized**: First-class support for Nix Flakes and NixOS Modules.
+- 🎨 **Fully Customizable**: Over 200 configuration options via `theme.conf`.
+- ⚡ **Lightweight**: Optimized QML code for fast loading and low resource usage.
 
-- SDDM ≥ 0.21;
-- QT ≥ 6.5;
-- qt6-svg;
-- qt6-virtualkeyboard
-- qt6-multimedia
+---
 
-# Installation
-[`Install script`](#Install-script) [`AUR packages for Arch`](#AUR-packages-for-arch) [`NixOS flake`](#NixOS-flake) [`Manual installation`](#Manual-installation) [`Pling/KDE Store`](#plingkde-store)
+## 🛠️ Installation
 
-## Install script
-Just clone the repo and run the script:
+### ❄️ NixOS (Recommended)
 
-```bash
-git clone -b main --depth=1 https://github.com/imtraf/ling-sddm && cd lingSDDM && ./install.sh
-```
+1. Add **lingSDDM** to your `flake.nix` inputs:
 
-> [!IMPORTANT]
-> Make sure to test the theme before rebooting by running `./test.sh`, otherwise you might end up with a broken login screen. Refer to the [snippets page](https://github.com/imtraf/ling-sddm/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/imtraf/ling-sddm/issues/new/choose) if you don't find the solution there.
-
-## AUR packages for Arch
-If you run Arch Linux, consider installing one of the AUR packages:
-
-##### [`Stable version`](https://aur.archlinux.org/packages/sddm-silent-theme):
-```bash
-yay -S sddm-silent-theme
-```
-##### [`Git version`](https://aur.archlinux.org/packages/sddm-silent-theme-git):
-```bash
-yay -S sddm-silent-theme-git
-```
-Then, replace the current theme and set the environment variables in `/etc/sddm.conf`:
-```bash
-sudoedit /etc/sddm.conf
-
-    # Make sure these options are correct:
-    [General]
-    InputMethod=qtvirtualkeyboard
-    GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard
-
-    [Theme]
-    Current=silent
-```
-Finally, test the theme to make sure everything is working:
-```bash
-cd /usr/share/sddm/themes/silent/
-./test.sh
-```
-> [!IMPORTANT]
-> Refer to the [snippets page](https://github.com/imtraf/ling-sddm/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/imtraf/ling-sddm/issues/new/choose) if you don't find the solution there.
-
-
-## NixOS flake
-For NixOS with flakes enabled, first include this flake into your flake inputs:
 ```nix
 inputs = {
-   silentSDDM = {
-      url = "github:uiriansan/lingSDDM";
-      inputs.nixpkgs.follows = "nixpkgs";
-   };
+  ling-sddm = {
+    url = "github:imtraf/ling-sddm";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
 };
 ```
 
-Next, import the default nixosModule and set the enable option
+2. Import the module and enable it in your configuration:
+
 ```nix
-{
-  inputs,
-  ...
-}: {
-    imports = [inputs.silentSDDM.nixosModules.default];
-    programs.silentSDDM = {
-        enable = true;
-        theme = "rei";
-        # settings = { ... }; see example in module
+{ inputs, ... }: {
+  imports = [ inputs.ling-sddm.nixosModules.default ];
+
+  services.displayManager.sddm.lingSDDM = {
+    enable = true;
+    profileIcons = {
+      "your_username" = ./.face; # Optional: Set custom avatar path
     };
+  };
 }
 ```
 
-That's it! lingSDDM should now be installed and configured.
-You may now run the `test-sddm-silent` executable for testing.
-For further configuration read the [module](./nix/module.nix) option descriptions and examples.
+### 🐧 Manual Installation (Other Distros)
 
-> [!NOTE]
-> Since the module adds extra dependencies to SDDM, 
-> you may need to restart for the theme to work correctly.
+1. **Install Dependencies**:
+   - SDDM (>= 0.21.0)
+   - QT (>= 6.5)
+   - `qt6-svg`, `qt6-virtualkeyboard`, `qt6-multimedia`
 
-### Local development and testing under nix
-First git clone the repository and cd into the resulting directory
+2. **Clone and Install**:
 ```bash
-git clone https://github.com/imtraf/ling-sddm.git
-cd lingSDDM/
+git clone --depth=1 https://github.com/imtraf/ling-sddm.git
+cd ling-sddm
+./install.sh
 ```
 
-Now you may make changes to the contents and test them out using the
-following
+---
+
+## ⚙️ Configuration
+
+The theme is highly configurable. On non-NixOS systems, edit `/usr/share/sddm/themes/default/theme.conf`.
+
+> [!TIP]
+> You can change everything from font sizes, colors, margins, to background animations. Check the `theme.conf` file for all available options.
+
+### 👤 Setting User Avatars
+
+For NixOS, use the `profileIcons` option in the module.
+For other distros, lingSDDM follows the `AccountsService` standard. Place your avatar at `~/.face.icon` or configure it via your desktop environment's settings.
+
+---
+
+## 🧪 Development
+
+Test your changes instantly without rebooting using the Nix dev environment:
 
 ```bash
+# Clone the repository
+git clone https://github.com/imtraf/ling-sddm.git
+cd ling-sddm
+
+# Run the test interface
 nix run .#test
 ```
 
-> [!IMPORTANT]
-> Refer to the [snippets page](https://github.com/imtraf/ling-sddm/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/imtraf/ling-sddm/issues/new/choose) if you don't find the solution there.
+---
 
-## Manual installation
+## 🤝 Acknowledgements
 
-### 1. Install dependencies:
+- [SilentSDDM](https://github.com/uiriansan/SilentSDDM) - The base project this theme was branched from.
+- [sddm-astronaut-theme](https://github.com/Keyitdev/sddm-astronaut-theme) - Layout inspiration.
+- [iconify.design](https://iconify.design/) - Beautiful system icons.
 
-#### Arch Linux
+---
 
-```bash
-sudo pacman -S --needed sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
-```
-
-#### Void Linux
-
-```bash
-sudo xbps-install sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
-```
-
-#### Fedora
-
-```bash
-sudo dnf install sddm qt6-qtsvg qt6-qtvirtualkeyboard qt6-qtmultimedia
-```
-
-#### OpenSUSE
-
-```bash
-sudo zypper install sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports qt6-multimedia qt6-multimedia-imports
-```
-
-### 2. Clone this repo:
-```bash
-git clone -b main --depth=1 https://github.com/imtraf/ling-sddm
-cd lingSDDM/
-```
-> [!NOTE]
-> You can also get the compressed files from the [latest release](https://github.com/imtraf/ling-sddm/releases/latest).
-
-### 3. Test the theme to make sure you have all dependencies:
-```bash
-./test.sh
-```
-> [!IMPORTANT]
-> Refer to the [snippets page](https://github.com/imtraf/ling-sddm/wiki/Snippets) if something goes wrong and [open an issue](https://github.com/imtraf/ling-sddm/issues/new/choose) if you don't find the solution there.
-
-### 4. Copy the theme to `/usr/share/sddm/themes/`:
-```bash
-cd lingSDDM/
-sudo mkdir -p /usr/share/sddm/themes/silent
-sudo cp -rf . /usr/share/sddm/themes/silent/
-```
-
-### 5. Install the fonts:
-```bash
-sudo cp -r /usr/share/sddm/themes/silent/fonts/* /usr/share/fonts/
-```
-
-### 6. Replace the current theme and set the environment variables in `/etc/sddm.conf`:
-```bash
-sudoedit /etc/sddm.conf
-
-    # Make sure these options are correct:
-    [General]
-    InputMethod=qtvirtualkeyboard
-    GreeterEnvironment=QML2_IMPORT_PATH=/usr/share/sddm/themes/silent/components/,QT_IM_MODULE=qtvirtualkeyboard
-
-    [Theme]
-    Current=silent
-```
-
-## Pling/KDE Store
-The theme is also available in [Planet Linux'ing Groups](https://www.pling.com/p/2298627/) & [KDE Store](https://store.kde.org/p/2298627).
-
-# Customizing
-
-The preset configs are located in `./configs/`. To change the active config, edit `./metadata.desktop` and replace the value of `ConfigFile=`:
-
-```bash
-ConfigFile=configs/<your_preferred_config>.conf
-```
-
-> [!NOTE]
-> Changes to the login screen will only take effect when made in `/usr/share/sddm/themes/silent/`. If you've changed things in the cloned directory, copy them with `sudo cp -rf lingSDDM/. /usr/share/sddm/themes/silent/`
-
-<br/>
-
-You can also create your own config file. There's a guide with the list of available options (there are more than 200 of them xD) in the [wiki](https://github.com/imtraf/ling-sddm/wiki/Customizing).
-
-> [!IMPORTANT]
-> Don't forget to test the theme after every change by running `./test.sh`, otherwise you might end up with a broken login screen.
-
-There are some extra tips on how to customize the theme on the [snippets page](https://github.com/imtraf/ling-sddm/wiki/Snippets).
-
-# Acknowledgements
-
-- [Keyitdev/sddm-astronaut-theme](https://github.com/Keyitdev/sddm-astronaut-theme): inspiration and code reference;
-- [Match-Yang/sddm-deepin](https://github.com/Match-Yang/sddm-deepin): inspiration and code reference;
-- [qt/qtvirtualkeyboard](https://github.com/qt/qtvirtualkeyboard): code reference;
-- [Joyston Judah](https://www.pexels.com/photo/white-and-black-mountain-wallpaper-933054/): background;
-- [DesktopHut](https://www.desktophut.com/blue-light-anime-girl-6794): background;
-- [MoeWalls](https://moewalls.com/anime/ken-kaneki-tokyo-ghoul-re-3-live-wallpaper/): background;
-- [MoeWalls](https://moewalls.com/anime/anime-girl-nissan-silvia-live-wallpaper/): background;
-- [iconify.design](https://iconify.design/): icons
+<div align="center">
+  Made with ❤️ by <b>imtraf</b>
+</div>
+ons

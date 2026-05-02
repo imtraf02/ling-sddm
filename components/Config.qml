@@ -77,8 +77,8 @@ QtObject {
     // [LoginScreen.LoginArea.Avatar]
     property string avatarShape: config.stringValue("LoginScreen.LoginArea.Avatar/shape") || "circle" // @possible:'circle' || 'square' @desc:Shape of the avatar. <br/>See also: <a href="#avatarborderradius">border-radius<a>
     property int avatarBorderRadius: config.intValue("LoginScreen.LoginArea.Avatar/border-radius") // @desc:Border radius of the 'square' avatar. <br/>See also: <a href="#avatarshape">shape<a>
-    property int avatarActiveSize: config.intValue("LoginScreen.LoginArea.Avatar/active-size") || 120 // @desc:Size of the selected user's avatar.
-    property int avatarInactiveSize: config.intValue("LoginScreen.LoginArea.Avatar/inactive-size") || 80 // @desc:Size of the non-selected user avatars.
+    property int avatarActiveSize: config.intValue("LoginScreen.LoginArea.Avatar/active-size") || 100 // @desc:Size of the selected user's avatar.
+    property int avatarInactiveSize: config.intValue("LoginScreen.LoginArea.Avatar/inactive-size") || 70 // @desc:Size of the non-selected user avatars.
     property real avatarInactiveOpacity: config.realValue("LoginScreen.LoginArea.Avatar/inactive-opacity") || 0.35 // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the non-selected avatars.
     property int avatarActiveBorderSize: config.intValue("LoginScreen.LoginArea.Avatar/active-border-size") // @desc:Border size of the selected user's avatar.
     property int avatarInactiveBorderSize: config.intValue("LoginScreen.LoginArea.Avatar/inactive-border-size") // @desc:Border size of the non-selected avatars.
@@ -87,19 +87,19 @@ QtObject {
 
     // [LoginScreen.LoginArea.Username]
     property string usernameFontFamily: config.stringValue("LoginScreen.LoginArea.Username/font-family") || "RedHatDisplay" // @desc:Font family used for the username.
-    property int usernameFontSize: config.intValue("LoginScreen.LoginArea.Username/font-size") || 16 // @desc:Font size of the username.
+    property int usernameFontSize: config.intValue("LoginScreen.LoginArea.Username/font-size") || 24 // @desc:Font size of the username.
     property int usernameFontWeight: config.intValue("LoginScreen.LoginArea.Username/font-weight") || 900 // @desc:Font weight of the username. 400 = regular, 600 = bold, 800 = black
     property color usernameColor: config.stringValue("LoginScreen.LoginArea.Username/color") || "#FFFFFF" // @desc:Color of the username.
     property int usernameMargin: config.intValue("LoginScreen.LoginArea.Username/margin") // @desc:Distance of the username from the avatar.
 
     // [LoginScreen.LoginArea.PasswordInput]
-    property int passwordInputWidth: config.intValue("LoginScreen.LoginArea.PasswordInput/width") || 200 // @desc:Width of the password field.
-    property int passwordInputHeight: config.intValue("LoginScreen.LoginArea.PasswordInput/height") || 30 // @desc:Height of the password field. This option also defines the size of the login button.
+    property int passwordInputWidth: config.intValue("LoginScreen.LoginArea.PasswordInput/width") || 300 // @desc:Width of the password field.
+    property int passwordInputHeight: config.intValue("LoginScreen.LoginArea.PasswordInput/height") || 45 // @desc:Height of the password field. This option also defines the size of the login button.
     property bool passwordInputDisplayIcon: config['LoginScreen.LoginArea.PasswordInput/display-icon'] === "false" ? false : true // @desc:Whether or not to display the icon in the password field.
     property string passwordInputFontFamily: config.stringValue("LoginScreen.LoginArea.PasswordInput/font-family") || "RedHatDisplay" // @desc:Font family of the password field.
-    property int passwordInputFontSize: config.intValue("LoginScreen.LoginArea.PasswordInput/font-size") || 12 // @desc:Font size of the password field.
+    property int passwordInputFontSize: config.intValue("LoginScreen.LoginArea.PasswordInput/font-size") || 18 // @desc:Font size of the password field.
     property string passwordInputIcon: config.stringValue("LoginScreen.LoginArea.PasswordInput/icon") || "password.svg" // @possible:File in `icons/` @desc:Icon in the password field.
-    property int passwordInputIconSize: config.intValue("LoginScreen.LoginArea.PasswordInput/icon-size") || 16 // @desc:Size of the icon inside the password field.
+    property int passwordInputIconSize: config.intValue("LoginScreen.LoginArea.PasswordInput/icon-size") || 24 // @desc:Size of the icon inside the password field.
     property color passwordInputContentColor: config.stringValue("LoginScreen.LoginArea.PasswordInput/content-color") || "#FFFFFF" // @desc:Color of text/icon in the password field.
     property color passwordInputBackgroundColor: config.stringValue("LoginScreen.LoginArea.PasswordInput/background-color") || "#FFFFFF" // @desc:Background color of the password field.
     property real passwordInputBackgroundOpacity: config.realValue("LoginScreen.LoginArea.PasswordInput/background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the password field.
@@ -116,7 +116,7 @@ QtObject {
     property color loginButtonActiveBackgroundColor: config.stringValue("LoginScreen.LoginArea.LoginButton/active-background-color") || "#FFFFFF" // @desc:Background color of the login button when hovered/focused.
     property real loginButtonActiveBackgroundOpacity: config.realValue("LoginScreen.LoginArea.LoginButton/active-background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the login button when hovered/focused.
     property string loginButtonIcon: config.stringValue("LoginScreen.LoginArea.LoginButton/icon") || "arrow-right.svg" // @possible:File in `icons/` @desc:Icon in the login button
-    property int loginButtonIconSize: config.intValue("LoginScreen.LoginArea.LoginButton/icon-size") || 18 // @desc:Size of the icon in the login button.
+    property int loginButtonIconSize: config.intValue("LoginScreen.LoginArea.LoginButton/icon-size") || 26 // @desc:Size of the icon in the login button.
     property color loginButtonContentColor: config.stringValue("LoginScreen.LoginArea.LoginButton/content-color") || "#FFFFFF" // @desc:Color of the icon/text in the login button.
     property color loginButtonActiveContentColor: config.stringValue("LoginScreen.LoginArea.LoginButton/active-content-color") || "#FFFFFF" // @desc:Color of the icon/text in the login button when hovered/focused.
     property int loginButtonBorderSize: config.intValue("LoginScreen.LoginArea.LoginButton/border-size") // @desc:Border size of the login button.
@@ -155,7 +155,7 @@ QtObject {
     property int menuAreaButtonsMarginRight: config.intValue("LoginScreen.MenuArea.Buttons/margin-right")  // @desc:Right margin of the menu buttons.
     property int menuAreaButtonsMarginBottom: config.intValue("LoginScreen.MenuArea.Buttons/margin-bottom") // @desc:Bottom margin of the menu buttons.
     property int menuAreaButtonsMarginLeft: config.intValue("LoginScreen.MenuArea.Buttons/margin-left") // @desc:Left margin of the menu buttons.
-    property int menuAreaButtonsSize: config.intValue("LoginScreen.MenuArea.Buttons/size") || 30 // @desc:Size of the menu buttons.
+    property int menuAreaButtonsSize: config.intValue("LoginScreen.MenuArea.Buttons/size") || 45 // @desc:Size of the menu buttons.
     property int menuAreaButtonsBorderRadius: config.intValue("LoginScreen.MenuArea.Buttons/border-radius") // @desc:Border radius of the menu buttons.
     property int menuAreaButtonsSpacing: config.intValue("LoginScreen.MenuArea.Buttons/spacing") // @desc:Spacing between menu buttons placed in the same position.
     property string menuAreaButtonsFontFamily: config.stringValue("LoginScreen.MenuArea.Buttons/font-family") || "RedHatDisplay" // @desc:Font family of the menu buttons.
@@ -195,7 +195,7 @@ QtObject {
     property color sessionActiveContentColor: config.stringValue("LoginScreen.MenuArea.Session/active-content-color") || "#FFFFFF" // @desc:Color of the icon and text in the session button when hovered/focused.
     property int sessionBorderSize: config.intValue("LoginScreen.MenuArea.Session/border-size") // @desc:Size of the border of the session button. The color of the border is defined by 'content-color' and 'active-content-color'.
     property int sessionFontSize: config.intValue("LoginScreen.MenuArea.Session/font-size") || 10 // @desc:Font size of the session button.
-    property int sessionIconSize: config.intValue("LoginScreen.MenuArea.Session/icon-size") || 16 // @desc:Size of the icon in the session button.
+    property int sessionIconSize: config.intValue("LoginScreen.MenuArea.Session/icon-size") || 24 // @desc:Size of the icon in the session button.
 
     // [LoginScreen.MenuArea.Layout]
     property bool layoutDisplay: config["LoginScreen.MenuArea.Layout/display"] === "false" ? false : true // @desc:Whether or not to display the layout button.
@@ -213,7 +213,7 @@ QtObject {
     property int layoutBorderSize: config.intValue("LoginScreen.MenuArea.Layout/border-size") // @desc:Size of the border of the layouts button. The color of the border is defined by 'content-color' and 'active-content-color'.
     property int layoutFontSize: config.intValue("LoginScreen.MenuArea.Layout/font-size") || 10 // @desc:Font size of the layout button.
     property string layoutIcon: config.stringValue("LoginScreen.MenuArea.Layout/icon") || "language.svg" // @possible:File in `icons/` @desc:Icon in the layout button.
-    property int layoutIconSize: config.intValue("LoginScreen.MenuArea.Layout/icon-size") || 16 // @desc:Size of the icon in the layout button.
+    property int layoutIconSize: config.intValue("LoginScreen.MenuArea.Layout/icon-size") || 24 // @desc:Size of the icon in the layout button.
 
     // [LoginScreen.MenuArea.Keyboard]
     property bool keyboardDisplay: config["LoginScreen.MenuArea.Keyboard/display"] === "false" ? false : true // @desc:Whether or not to display the virtual keyboard toggle button.
@@ -226,7 +226,7 @@ QtObject {
     property color keyboardActiveContentColor: config.stringValue("LoginScreen.MenuArea.Keyboard/active-content-color") || "#FFFFFF" // @desc:Color of the icon in the virtual keyboard toggle button when hovered/focused.
     property int keyboardBorderSize: config.intValue("LoginScreen.MenuArea.Keyboard/border-size") // @desc:Border size of the virtual keyboard toggle button. The color of the border is defined by 'content-color' and 'active-content-color'.
     property string keyboardIcon: config.stringValue("LoginScreen.MenuArea.Keyboard/icon") || "keyboard.svg" // @possible:File in `icons/` @desc:Icon in the virtual keyboard toggle button.
-    property int keyboardIconSize: config.intValue("LoginScreen.MenuArea.Keyboard/icon-size") || 16 // @desc:Size of the icon in the virtual keyboard toggle button.
+    property int keyboardIconSize: config.intValue("LoginScreen.MenuArea.Keyboard/icon-size") || 24 // @desc:Size of the icon in the virtual keyboard toggle button.
 
     // [LoginScreen.MenuArea.Power]
     property bool powerDisplay: config["LoginScreen.MenuArea.Power/display"] === "false" ? false : true // @desc:Whether or not to display the power button.
@@ -242,7 +242,7 @@ QtObject {
     property color powerActiveContentColor: config.stringValue("LoginScreen.MenuArea.Power/active-content-color") || "#FFFFFF" // @desc:Color of the icon in the power button when hovered/focused.
     property int powerBorderSize: config.intValue("LoginScreen.MenuArea.Power/border-size") // @desc:Border size of the power button. The color of the border is defined by 'content-color' and 'active-content-color'.
     property string powerIcon: config.stringValue("LoginScreen.MenuArea.Power/icon") || "power.svg" // @possible:File in `icons/` @desc:Icon in the power button.
-    property int powerIconSize: config.intValue("LoginScreen.MenuArea.Power/icon-size") || 16 // @desc:Size of the icon in the power button.
+    property int powerIconSize: config.intValue("LoginScreen.MenuArea.Power/icon-size") || 24 // @desc:Size of the icon in the power button.
 
     // [LoginScreen.VirtualKeyboard]
     property real virtualKeyboardScale: config.realValue("LoginScreen.VirtualKeyboard/scale") || 1.0 // @desc:Scale of the virtual keyboard.
