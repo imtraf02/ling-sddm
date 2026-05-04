@@ -51,6 +51,13 @@ in
         pkgs.gst_all_1.gst-plugins-bad
         pkgs.gst_all_1.gst-libav
       ];
+      # Expose the theme's components/ dir to the QML engine at runtime.
+      # Without this, custom types (IconButton, Input, etc.) cannot be
+      # resolved by sddm-greeter-qt6, causing "X is not a type" errors.
+      # This mirrors what `nix run .#test` does via QML2_IMPORT_PATH.
+      settings.General.GreeterEnvironment = lib.concatStringsSep "," [
+        "QML2_IMPORT_PATH=${pkg}/share/sddm/themes/${themeName}/components"
+      ];
     };
 
     environment.systemPackages = [
