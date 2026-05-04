@@ -24,21 +24,15 @@ stdenvNoCC.mkDerivation {
 
   installPhase = ''
     mkdir -p $out/share/sddm/themes/ling-sddm
-    cp -r $src/* $out/share/sddm/themes/ling-sddm/
+    cp -r . $out/share/sddm/themes/ling-sddm/
     chmod -R u+w $out/share/sddm/themes/ling-sddm/
 
-    chmod -R u+w $out/share/sddm/themes/ling-sddm/
+    # Remove unnecessary files from the installed theme
+    rm -rf $out/share/sddm/themes/ling-sddm/{nix,flake.nix,flake.lock,install.sh,README.md,LICENSE,.git}
 
-    # Remove nix directory from the installed theme
-    rm -rf $out/share/sddm/themes/ling-sddm/nix
-    rm -f $out/share/sddm/themes/ling-sddm/flake.nix
-    rm -f $out/share/sddm/themes/ling-sddm/flake.lock
-    rm -f $out/share/sddm/themes/ling-sddm/install.sh
-
-    # Install fonts to the standard location as well
+    # Install fonts to the standard location
     mkdir -p $out/share/fonts
     cp -r fonts/supermercado-one $out/share/fonts/
-    chmod -R u+w $out/share/fonts/
   '';
 
   meta = with lib; {
