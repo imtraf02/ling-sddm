@@ -3,11 +3,27 @@
   stdenvNoCC,
   kdePackages,
 }:
+let
+  inherit (lib.fileset) toSource difference unions fileFilter maybeMissing;
+in
 stdenvNoCC.mkDerivation {
   pname = "lingsddm";
   version = "1.0.0";
 
-  src = ../.;
+  # cleanly select only the pieces of source that **building** this package depends on.
+  # avoids unnecessary rebuilds when unrelated pieces (like the README) changes.
+  src = toSource {
+    root = ../.;
+    fileset = difference ../. (unions [
+      (fileFilter (file: lib.any (ext: file.hasExt ext) ["nix" "sh"]) ../.)
+      (maybeMissing ../nix)
+      (maybeMissing ../docs)
+      (maybeMissing ../LICENSE)
+      (maybeMissing ../README.md)
+      (maybeMissing ../flake.lock)
+      (maybeMissing ../.git)
+    ]);
+  };
 
   # Qt packages must be propagated so they're available at runtime
   # for sddm-greeter-qt6 to find QML modules (QtMultimedia, etc.).
@@ -22,13 +38,11 @@ stdenvNoCC.mkDerivation {
   # Don't let Qt wrapper scripts interfere with SDDM's own Qt environment.
   dontWrapQtApps = true;
 
-  installPhase = ''
-    mkdir -p $out/share/sddm/themes/ling-sddm
-    cp -r . $out/share/sddm/themes/ling-sddm/
-    chmod -R u+w $out/share/sddm/themes/ling-sddm/
-
-    # Remove unnecessary files from the installed theme
-    rm -rf $out/share/sddm/themes/ling-sddm/{nix,flake.nix,flake.lock,install.sh,README.md,LICENSE,.git}
+  installPhase = let
+    basePath = "$out/share/sddm/themes/ling-sddm";
+  in ''
+    mkdir -p ${basePath}
+    cp -r . ${basePath}/
 
     # Install fonts to the standard location
     mkdir -p $out/share/fonts
