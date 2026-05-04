@@ -1,13 +1,27 @@
 {
-  stdenv,
   lib,
+  stdenvNoCC,
+  kdePackages,
   background ? null,
 }:
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   pname = "lingsddm";
   version = "1.0.0";
 
   src = ../.;
+
+  # Qt packages must be propagated so they're available at runtime
+  # for sddm-greeter-qt6 to find QML modules (QtMultimedia, etc.).
+  propagatedBuildInputs = [
+    kdePackages.qtmultimedia
+    kdePackages.qtsvg
+    kdePackages.qtvirtualkeyboard
+    kdePackages.qt5compat
+    kdePackages.qtquick3d
+  ];
+
+  # Don't let Qt wrapper scripts interfere with SDDM's own Qt environment.
+  dontWrapQtApps = true;
 
   installPhase = ''
     mkdir -p $out/share/sddm/themes/ling-sddm

@@ -38,26 +38,18 @@ in
     services.displayManager.sddm = {
       enable = true;
       theme = themeName;
+      # Qt packages are propagated from the package derivation.
+      # GStreamer is added here for video background support.
       extraPackages = [
-        pkgs.kdePackages.qtmultimedia
-        pkgs.kdePackages.qtsvg
-        pkgs.kdePackages.qtvirtualkeyboard
-        pkgs.kdePackages.qt5compat
-        pkgs.kdePackages.qtquick3d
-        # Video support
         pkgs.gst_all_1.gstreamer
         pkgs.gst_all_1.gst-plugins-base
         pkgs.gst_all_1.gst-plugins-good
         pkgs.gst_all_1.gst-plugins-bad
         pkgs.gst_all_1.gst-libav
       ];
-      # Expose the theme's components/ dir to the QML engine at runtime.
-      # Without this, custom types (IconButton, Input, etc.) cannot be
-      # resolved by sddm-greeter-qt6, causing "X is not a type" errors.
-      # This mirrors what `nix run .#test` does via QML2_IMPORT_PATH.
-      settings.General.GreeterEnvironment = lib.concatStringsSep "," [
-        "QML2_IMPORT_PATH=${pkg}/share/sddm/themes/${themeName}/components"
-      ];
+      # NOTE: Do NOT set QML2_IMPORT_PATH here.
+      # sddm-greeter-qt6 uses Qt6 which ignores QML2_IMPORT_PATH (Qt5 only).
+      # Component resolution is handled entirely by the qmldir files in the theme.
     };
 
     environment.systemPackages = [
