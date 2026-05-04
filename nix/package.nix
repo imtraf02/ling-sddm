@@ -40,7 +40,7 @@ stdenvNoCC.mkDerivation {
   dontWrapQtApps = true;
 
   installPhase = let
-    basePath = "$out/share/sddm/themes/${pname}";
+    basePath = "$out/share/sddm/themes/default";
   in ''
     mkdir -p ${basePath}
     cp -r . ${basePath}/
