@@ -5,7 +5,7 @@
 }:
 let
   inherit (lib.fileset) toSource difference unions fileFilter maybeMissing;
-  pname = "lingsddm";
+  pname = "ling-sddm";
   version = "1.0.0";
 in
 stdenvNoCC.mkDerivation {
@@ -40,7 +40,7 @@ stdenvNoCC.mkDerivation {
   dontWrapQtApps = true;
 
   installPhase = let
-    basePath = "$out/share/sddm/themes/default";
+    basePath = "$out/share/sddm/themes/${pname}";
   in ''
     mkdir -p ${basePath}
     cp -r . ${basePath}/
