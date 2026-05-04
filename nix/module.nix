@@ -3,14 +3,14 @@
 with lib;
 
 let
-  cfg = config.programs.lingSDDM;
+  cfg = config.services.displayManager.sddm.ling-sddm;
   themeName = "default";
   pkg = pkgs.callPackage ./package.nix { };
 
   users = attrNames config.users.users;
 in
 {
-  options.programs.lingSDDM = {
+  options.services.displayManager.sddm.ling-sddm = {
     enable = mkEnableOption "ling-sddm SDDM theme";
     
     profileIcons = mkOption {
