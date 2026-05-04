@@ -5,10 +5,11 @@
 }:
 let
   inherit (lib.fileset) toSource difference unions fileFilter maybeMissing;
-in
-stdenvNoCC.mkDerivation {
   pname = "lingsddm";
   version = "1.0.0";
+in
+stdenvNoCC.mkDerivation {
+  inherit pname version;
 
   # cleanly select only the pieces of source that **building** this package depends on.
   # avoids unnecessary rebuilds when unrelated pieces (like the README) changes.
