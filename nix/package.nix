@@ -17,6 +17,7 @@ stdenvNoCC.mkDerivation {
     kdePackages.qtvirtualkeyboard
     kdePackages.qt5compat
     kdePackages.qtquick3d
+    kdePackages.qtquickeffects
   ];
 
   # Don't let Qt wrapper scripts interfere with SDDM's own Qt environment.

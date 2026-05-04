@@ -3,14 +3,14 @@
 with lib;
 
 let
-  cfg = config.services.displayManager.sddm.ling-sddm;
+  cfg = config.programs.lingSDDM;
   themeName = "default";
   pkg = pkgs.callPackage ./package.nix { };
 
   users = attrNames config.users.users;
 in
 {
-  options.services.displayManager.sddm.ling-sddm = {
+  options.programs.lingSDDM = {
     enable = mkEnableOption "ling-sddm SDDM theme";
     
     profileIcons = mkOption {
@@ -34,6 +34,12 @@ in
       # Qt packages are propagated from the package derivation.
       # GStreamer is added here for video background support.
       extraPackages = [
+        pkgs.kdePackages.qtmultimedia
+        pkgs.kdePackages.qtsvg
+        pkgs.kdePackages.qtvirtualkeyboard
+        pkgs.kdePackages.qt5compat
+        pkgs.kdePackages.qtquick3d
+        pkgs.kdePackages.qtquickeffects
         pkgs.gst_all_1.gstreamer
         pkgs.gst_all_1.gst-plugins-base
         pkgs.gst_all_1.gst-plugins-good
