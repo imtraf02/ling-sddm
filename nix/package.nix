@@ -23,17 +23,17 @@ stdenvNoCC.mkDerivation {
   dontWrapQtApps = true;
 
   installPhase = ''
-    mkdir -p $out/share/sddm/themes/default
-    cp -r $src/* $out/share/sddm/themes/default/
-    chmod -R u+w $out/share/sddm/themes/default/
+    mkdir -p $out/share/sddm/themes/ling-sddm
+    cp -r $src/* $out/share/sddm/themes/ling-sddm/
+    chmod -R u+w $out/share/sddm/themes/ling-sddm/
 
-    chmod -R u+w $out/share/sddm/themes/default/
+    chmod -R u+w $out/share/sddm/themes/ling-sddm/
 
     # Remove nix directory from the installed theme
-    rm -rf $out/share/sddm/themes/default/nix
-    rm -f $out/share/sddm/themes/default/flake.nix
-    rm -f $out/share/sddm/themes/default/flake.lock
-    rm -f $out/share/sddm/themes/default/install.sh
+    rm -rf $out/share/sddm/themes/ling-sddm/nix
+    rm -f $out/share/sddm/themes/ling-sddm/flake.nix
+    rm -f $out/share/sddm/themes/ling-sddm/flake.lock
+    rm -f $out/share/sddm/themes/ling-sddm/install.sh
 
     # Install fonts to the standard location as well
     mkdir -p $out/share/fonts

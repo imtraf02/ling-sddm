@@ -42,8 +42,8 @@
               qtdeclarative
               qtquick3d
               sddm
-            ]}:${self.packages.${system}.default}/share/sddm/themes/default/components
-            ${nixpkgsFor.${system}.kdePackages.sddm}/bin/sddm-greeter-qt6 --test-mode --theme ${self.packages.${system}.default}/share/sddm/themes/default
+            ]}:${self.packages.${system}.default}/share/sddm/themes/ling-sddm/components
+            ${nixpkgsFor.${system}.kdePackages.sddm}/bin/sddm-greeter-qt6 --test-mode --theme ${self.packages.${system}.default}/share/sddm/themes/ling-sddm
           ''}";
         };
       });
