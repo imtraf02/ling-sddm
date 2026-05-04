@@ -1,1 +1,12 @@
 singleton Config components/Config.qml
+Avatar components/Avatar.qml
+CVKeyboard components/CVKeyboard.qml
+IconButton components/IconButton.qml
+Input components/Input.qml
+LockScreen components/LockScreen.qml
+LoginScreen components/LoginScreen.qml
+MenuArea components/MenuArea.qml
+PowerMenu components/PowerMenu.qml
+SessionSelector components/SessionSelector.qml
+Spinner components/Spinner.qml
+UserSelector components/UserSelector.qml

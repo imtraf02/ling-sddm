@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://github.com/user-attachments/assets/dd63c526-34d6-45ec-8a7d-5c29bf08c702" width="100%" alt="lingSDDM Banner">
   
-  # 🌙 lingSDDM
+  # 🌙 ling-sddm
   
   **A sleek, modern, and highly customizable SDDM theme optimized for NixOS and high-end desktop setups.**
   
@@ -14,7 +14,7 @@
 
 ## 🌟 Overview
 
-**lingSDDM** is a high-performance SDDM theme designed with aesthetics and flexibility in mind. Whether you want a minimal setup or a rich, animated experience, lingSDDM provides the tools to build your perfect login screen.
+**ling-sddm** is a high-performance SDDM theme designed with aesthetics and flexibility in mind. Whether you want a minimal setup or a rich, animated experience, ling-sddm provides the tools to build your perfect login screen.
 
 > [!IMPORTANT]
 > Special thanks to [SilentSDDM](https://github.com/uiriansan/SilentSDDM) for the core logic and structural inspiration.
@@ -53,7 +53,7 @@ inputs = {
 { inputs, ... }: {
   imports = [ inputs.ling-sddm.nixosModules.default ];
 
-  services.displayManager.sddm.lingSDDM = {
+  services.displayManager.sddm.ling-sddm = {
     enable = true;
     background = ./.background.mp4; # Path to your custom video or image
     # Optional: custom profile icons
@@ -85,7 +85,7 @@ sudo ./install.sh --background path/to/wallpaper.mp4
 ### ❄️ NixOS
 Use the `profileIcons` option in your configuration:
 ```nix
-services.displayManager.sddm.lingSDDM.profileIcons = {
+services.displayManager.sddm.ling-sddm.profileIcons = {
   "username" = ./.face; # Path to your image
 };
 ```

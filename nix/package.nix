@@ -10,18 +10,18 @@ stdenv.mkDerivation {
   src = ../.;
 
   installPhase = ''
-    mkdir -p $out/share/sddm/themes/lingSDDM
-    cp -r $src/* $out/share/sddm/themes/lingSDDM/
-    chmod -R u+w $out/share/sddm/themes/lingSDDM/
+    mkdir -p $out/share/sddm/themes/ling-sddm
+    cp -r $src/* $out/share/sddm/themes/ling-sddm/
+    chmod -R u+w $out/share/sddm/themes/ling-sddm/
 
     ${lib.optionalString (background != null) ''
-      sed -i 's|^background =.*|background = "${background}"|' $out/share/sddm/themes/lingSDDM/theme.conf
+      sed -i 's|^background =.*|background = "${background}"|' $out/share/sddm/themes/ling-sddm/theme.conf
     ''}
 
     # Remove nix directory from the installed theme
-    rm -rf $out/share/sddm/themes/lingSDDM/nix
-    rm -f $out/share/sddm/themes/lingSDDM/flake.nix
-    rm -f $out/share/sddm/themes/lingSDDM/flake.lock
+    rm -rf $out/share/sddm/themes/ling-sddm/nix
+    rm -f $out/share/sddm/themes/ling-sddm/flake.nix
+    rm -f $out/share/sddm/themes/ling-sddm/flake.lock
 
     # Install fonts to the standard location as well
     mkdir -p $out/share/fonts

@@ -3,8 +3,8 @@
 with lib;
 
 let
-  cfg = config.services.displayManager.sddm.lingSDDM;
-  themeName = "lingSDDM";
+  cfg = config.services.displayManager.sddm.ling-sddm;
+  themeName = "ling-sddm";
   pkg = pkgs.callPackage ./package.nix { 
     background = cfg.background;
   };
@@ -12,8 +12,8 @@ let
   users = attrNames config.users.users;
 in
 {
-  options.services.displayManager.sddm.lingSDDM = {
-    enable = mkEnableOption "lingSDDM SDDM theme";
+  options.services.displayManager.sddm.ling-sddm = {
+    enable = mkEnableOption "ling-sddm SDDM theme";
     
     profileIcons = mkOption {
       type = types.attrsOf types.path;

@@ -13,7 +13,7 @@ YELLOW='\033[1;33m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
-THEME_NAME="lingSDDM"
+THEME_NAME="ling-sddm"
 THEMES_DIR="/usr/share/sddm/themes"
 FONTS_DIR="/usr/share/fonts"
 SDDM_CONF="/etc/sddm.conf"

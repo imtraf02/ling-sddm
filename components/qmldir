@@ -1,1 +1,12 @@
 singleton Config Config.qml
+Avatar Avatar.qml
+CVKeyboard CVKeyboard.qml
+IconButton IconButton.qml
+Input Input.qml
+LockScreen LockScreen.qml
+LoginScreen LoginScreen.qml
+MenuArea MenuArea.qml
+PowerMenu PowerMenu.qml
+SessionSelector SessionSelector.qml
+Spinner Spinner.qml
+UserSelector UserSelector.qml
