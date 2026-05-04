@@ -35,7 +35,7 @@ ColumnLayout {
             selector.close();
             sddm.suspend();
         }
-        label: textConstants.suspend
+        label: "Suspend"
 
         KeyNavigation.up: shutdownButton
         KeyNavigation.down: rebootButton
@@ -64,7 +64,7 @@ ColumnLayout {
             selector.close();
             sddm.reboot();
         }
-        label: textConstants.reboot
+        label: "Reboot"
 
         KeyNavigation.up: suspendButton
         KeyNavigation.down: shutdownButton
@@ -93,7 +93,7 @@ ColumnLayout {
             selector.close();
             sddm.powerOff();
         }
-        label: textConstants.shutdown
+        label: "Shutdown"
 
         KeyNavigation.up: rebootButton
         KeyNavigation.down: suspendButton

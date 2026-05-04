@@ -98,118 +98,6 @@ Item {
     }
 
     Component {
-        id: layoutMenuComponent
-
-        IconButton {
-            id: layoutButton
-
-            property bool showLabel: Config.layoutDisplayLayoutName
-
-            height: Config.menuAreaButtonsSize * Config.generalScale
-            icon: Config.getIcon(Config.layoutIcon)
-            active: popup.visible
-            borderRadius: Config.menuAreaButtonsBorderRadius
-            borderSize: Config.layoutBorderSize
-            iconSize: Config.layoutIconSize
-            fontSize: Config.layoutFontSize
-            backgroundColor: Config.layoutBackgroundColor
-            backgroundOpacity: Config.layoutBackgroundOpacity
-            activeBackgroundColor: Config.layoutBackgroundColor
-            activeBackgroundOpacity: Config.layoutActiveBackgroundOpacity
-            contentColor: Config.layoutContentColor
-            activeContentColor: Config.layoutActiveContentColor
-            fontFamily: Config.menuAreaButtonsFontFamily
-            activeFocusOnTab: true
-            enabled: loginScreen.state === "normal" || popup.visible
-            focus: false
-            onClicked: {
-                if (loginScreen.isSelectingUser) {
-                    loginScreen.isSelectingUser = false;
-                } else {
-                    popup.open();
-                }
-            }
-            tooltipText: "Change keyboard layout"
-            // FIX: Array bounds checking for keyboard layouts
-            label: showLabel ? (keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : ""
-
-            Connections {
-                target: loginScreen
-                function onToggleLayoutPopup() {
-                    if (popup.visible) {
-                        popup.close();
-                    } else {
-                        popup.open();
-                    }
-                }
-            }
-
-            Component.onDestruction: {
-                if (typeof connections !== 'undefined') {
-                    connections.target = null;
-                }
-            }
-
-            Popup {
-                id: popup
-                parent: layoutButton
-                padding: Config.menuAreaPopupsPadding
-                background: Rectangle {
-                    color: Config.menuAreaPopupsBackgroundColor
-                    opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
-
-                    Rectangle {
-                        anchors.fill: parent
-                        visible: Config.menuAreaPopupsBorderSize > 0
-                        radius: parent.radius
-                        color: "transparent"
-                        border {
-                            color: Config.menuAreaPopupsBorderColor
-                            width: Config.menuAreaPopupsBorderSize * Config.generalScale
-                        }
-                    }
-                }
-                focus: visible
-                dim: true
-                Overlay.modal: Rectangle {
-                    color: "transparent" // Remove dim background (dim: false doesn't work here)
-                    MouseArea {
-                        anchors.fill: parent
-                        hoverEnabled: true
-                        onClicked: function (event) {
-                            popup.close();
-                            event.accepted = true;
-                        }
-                    }
-                }
-
-                onOpened: loginScreen.safeStateChange("popup")
-                onClosed: loginScreen.safeStateChange("normal")
-
-                modal: true
-                popupType: Popup.Item
-                closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-                LayoutSelector {
-                    focus: popup.focus
-                    onLayoutChanged: function (index) {
-                        // FIX: Array bounds checking for keyboard layouts
-                        layoutButton.label = showLabel ? (keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName.toUpperCase() : "") : "";
-                        VirtualKeyboardSettings.locale = Languages.getKBCodeFor(keyboard && keyboard.layouts && keyboard.currentLayout >= 0 && keyboard.currentLayout < keyboard.layouts.length ? keyboard.layouts[keyboard.currentLayout].shortName : "");
-                    }
-                    onClose: {
-                        popup.close();
-                    }
-                }
-
-                Component.onCompleted: {
-                    [x, y] = menuArea.calculatePopupPos(Config.layoutPopupDirection, Config.layoutPopupAlign, popup, layoutButton);
-                }
-            }
-        }
-    }
-
-    Component {
         id: keyboardMenuComponent
 
         IconButton {
@@ -484,8 +372,6 @@ Item {
             var createdObject;
             if (menus[i].name === "session")
                 createdObject = sessionMenuComponent.createObject(pos, {});
-            else if (menus[i].name === "layout")
-                createdObject = layoutMenuComponent.createObject(pos, {});
             else if (menus[i].name === "keyboard")
                 createdObject = keyboardMenuComponent.createObject(pos, {});
             else if (menus[i].name === "power")

@@ -31,7 +31,7 @@ QtObject {
     property string clockPosition: config.stringValue("LockScreen.Clock/position") || "top-center" // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @desc:Position of the clock and date in the lock screen. <br />See also: <a href="#lockscreenpaddingtop">LockScreen/padding-top</a>
     property string clockAlign: config.stringValue("LockScreen.Clock/align") || "center" // @possible:'left' | 'center' | 'right' @desc:Relative alignment of the clock and date.
     property string clockFormat: config.stringValue("LockScreen.Clock/format") || "hh:mm" // @desc:Format string used for the clock.
-    property string clockFontFamily: config.stringValue("LockScreen.Clock/font-family") || "RedHatDisplay" // @desc:Font family used for the clock.
+    property string clockFontFamily: config.stringValue("LockScreen.Clock/font-family") || "Supermercado" // @desc:Font family used for the clock.
     property int clockFontSize: config.intValue("LockScreen.Clock/font-size") || 70 // @desc:Font size of the clock.
     property int clockFontWeight: config.intValue("LockScreen.Clock/font-weight") || 900 // @desc:Font weight of the clock. 400 = regular, 600 = bold, 800 = black
     property color clockColor: config.stringValue("LockScreen.Clock/color") || "#FFFFFF" // @desc:Color of the clock.
@@ -39,8 +39,7 @@ QtObject {
     // [LockScreen.Date]
     property bool dateDisplay: config['LockScreen.Date/display'] === "false" ? false : true // @desc:Whether or not to display the date in the lock screen.
     property string dateFormat: config.stringValue("LockScreen.Date/format") || "dddd, MMMM dd, yyyy" // @desc:Format string used for the date.
-    property string dateLocale: config.stringValue("LockScreen.Date/locale") || "en_US" // @possible:<a href="https://doc.qt.io/qt-6/qml-qtqml-qt.html#locale-method">QFormat</a> @desc:Language of the date defined by lang_COUNTRY.<br/>'lang' is a lowercase, two-letter, <a href="https://en.wikipedia.org/wiki/List_of_ISO_639_language_codes">ISO 639 language code</a><br/>'COUNTRY' is an uppercase, two-letter, <a href="https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes">ISO 3166 country code.</a>
-    property string dateFontFamily: config.stringValue("LockScreen.Date/font-family") || "RedHatDisplay" // @desc:Font family used for the date.
+    property string dateFontFamily: config.stringValue("LockScreen.Date/font-family") || "Supermercado" // @desc:Font family used for the date.
     property int dateFontSize: config.intValue("LockScreen.Date/font-size") || 14 // @desc:Font size of the date.
     property int dateFontWeight: config.intValue("LockScreen.Date/font-weight") || 400 // @desc:Font weight of the date. 400 = regular, 600 = bold, 800 = black
     property color dateColor: config.stringValue("LockScreen.Date/color") || "#FFFFFF" // @desc:Color of the date.
@@ -51,7 +50,7 @@ QtObject {
     property string lockMessagePosition: config.stringValue("LockScreen.Message/position") || "bottom-center" // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @desc:Position of the custom message in the lock screen. <br />See also: <a href="#lockscreenpaddingtop">LockScreen/padding-top</a>
     property string lockMessageAlign: config.stringValue("LockScreen.Message/align") || "center" // @possible:'left' | 'center' | 'right' @desc:Relative alignment of the custom message and its icon.
     property string lockMessageText: config.stringValue("LockScreen.Message/text") || "Press any key" // @desc:Text of the custom message.
-    property string lockMessageFontFamily: config.stringValue("LockScreen.Message/font-family") || "RedHatDisplay" // @desc:Font family used for the custom message.
+    property string lockMessageFontFamily: config.stringValue("LockScreen.Message/font-family") || "Supermercado" // @desc:Font family used for the custom message.
     property int lockMessageFontSize: config.intValue("LockScreen.Message/font-size") || 12 // @desc:Font size of the custom message.
     property int lockMessageFontWeight: config.intValue("LockScreen.Message/font-weight") || 400 // @desc:Font weight of the date. 400 = regular, 600 = bold, 800 = black
     property bool lockMessageDisplayIcon: config['LockScreen.Message/display-icon'] === "false" ? false : true // @desc:Show or hide the icon above the message.
@@ -75,7 +74,6 @@ QtObject {
     property int loginAreaMarginTop: config.intValue("LoginScreen.LoginArea/margin-top") // @desc:Top margin of the login area when position is set to `left` or `right`.
 
     // [LoginScreen.LoginArea.Avatar]
-    property string avatarShape: config.stringValue("LoginScreen.LoginArea.Avatar/shape") || "circle" // @possible:'circle' || 'square' @desc:Shape of the avatar. <br/>See also: <a href="#avatarborderradius">border-radius<a>
     property int avatarBorderRadius: config.intValue("LoginScreen.LoginArea.Avatar/border-radius") // @desc:Border radius of the 'square' avatar. <br/>See also: <a href="#avatarshape">shape<a>
     property int avatarActiveSize: config.intValue("LoginScreen.LoginArea.Avatar/active-size") || 100 // @desc:Size of the selected user's avatar.
     property int avatarInactiveSize: config.intValue("LoginScreen.LoginArea.Avatar/inactive-size") || 70 // @desc:Size of the non-selected user avatars.
@@ -86,7 +84,7 @@ QtObject {
     property color avatarInactiveBorderColor: config.stringValue("LoginScreen.LoginArea.Avatar/inactive-border-color") || "#FFFFFF" // @desc:Border color of the non-selected avatars.
 
     // [LoginScreen.LoginArea.Username]
-    property string usernameFontFamily: config.stringValue("LoginScreen.LoginArea.Username/font-family") || "RedHatDisplay" // @desc:Font family used for the username.
+    property string usernameFontFamily: config.stringValue("LoginScreen.LoginArea.Username/font-family") || "Supermercado" // @desc:Font family used for the username.
     property int usernameFontSize: config.intValue("LoginScreen.LoginArea.Username/font-size") || 24 // @desc:Font size of the username.
     property int usernameFontWeight: config.intValue("LoginScreen.LoginArea.Username/font-weight") || 900 // @desc:Font weight of the username. 400 = regular, 600 = bold, 800 = black
     property color usernameColor: config.stringValue("LoginScreen.LoginArea.Username/color") || "#FFFFFF" // @desc:Color of the username.
@@ -96,7 +94,7 @@ QtObject {
     property int passwordInputWidth: config.intValue("LoginScreen.LoginArea.PasswordInput/width") || 300 // @desc:Width of the password field.
     property int passwordInputHeight: config.intValue("LoginScreen.LoginArea.PasswordInput/height") || 45 // @desc:Height of the password field. This option also defines the size of the login button.
     property bool passwordInputDisplayIcon: config['LoginScreen.LoginArea.PasswordInput/display-icon'] === "false" ? false : true // @desc:Whether or not to display the icon in the password field.
-    property string passwordInputFontFamily: config.stringValue("LoginScreen.LoginArea.PasswordInput/font-family") || "RedHatDisplay" // @desc:Font family of the password field.
+    property string passwordInputFontFamily: config.stringValue("LoginScreen.LoginArea.PasswordInput/font-family") || "Supermercado" // @desc:Font family of the password field.
     property int passwordInputFontSize: config.intValue("LoginScreen.LoginArea.PasswordInput/font-size") || 18 // @desc:Font size of the password field.
     property string passwordInputIcon: config.stringValue("LoginScreen.LoginArea.PasswordInput/icon") || "password.svg" // @possible:File in `icons/` @desc:Icon in the password field.
     property int passwordInputIconSize: config.intValue("LoginScreen.LoginArea.PasswordInput/icon-size") || 24 // @desc:Size of the icon inside the password field.
@@ -126,14 +124,14 @@ QtObject {
     property int loginButtonMarginLeft: config.intValue("LoginScreen.LoginArea.LoginButton/margin-left") // @desc:Distance of the login button from the password field.
     property bool loginButtonShowTextIfNoPassword: config['LoginScreen.LoginArea.LoginButton/show-text-if-no-password'] === "false" ? false : true // @desc:Whether or not to show a label in the login button when the password field is not visible.
     property bool loginButtonHideIfNotNeeded: config.boolValue("LoginScreen.LoginArea.LoginButton/hide-if-not-needed") // @desc:Whether or not to hide the login button if the password field is visible. You can still log-in with [enter].
-    property string loginButtonFontFamily: config.stringValue("LoginScreen.LoginArea.LoginButton/font-family") || "RedHatDisplay" // @desc:Font family of the label of the login button/
+    property string loginButtonFontFamily: config.stringValue("LoginScreen.LoginArea.LoginButton/font-family") || "Supermercado" // @desc:Font family of the label of the login button/
     property int loginButtonFontSize: config.intValue("LoginScreen.LoginArea.LoginButton/font-size") || 12 // @desc:Font size of the label of the login button.
     property int loginButtonFontWeight: config.intValue("LoginScreen.LoginArea.LoginButton/font-weight") || 600 // @desc:Font weight of the label of the login button. 400 = regular, 600 = bold, 800 = black
 
     // [LoginScreen.LoginArea.Spinner]
     property bool spinnerDisplayText: config['LoginScreen.LoginArea.Spinner/display-text'] === "false" ? false : true // @desc:Whether or not to display the text with the spinning icon.
     property string spinnerText: config.stringValue("LoginScreen.LoginArea.Spinner/text") || "Logging in" // @desc:Text to be displayed with the spinning icon.
-    property string spinnerFontFamily: config.stringValue("LoginScreen.LoginArea.Spinner/font-family") || "RedHatDisplay" // @desc:Font family of the text to be displayed with the spinning icon.
+    property string spinnerFontFamily: config.stringValue("LoginScreen.LoginArea.Spinner/font-family") || "Supermercado" // @desc:Font family of the text to be displayed with the spinning icon.
     property int spinnerFontWeight: config.intValue("LoginScreen.LoginArea.Spinner/font-weight") || 600 // @desc:Font weight of the text to be displayed with the spinning icon. 400 = regular, 600 = bold, 800 = black
     property int spinnerFontSize: config.intValue("LoginScreen.LoginArea.Spinner/font-size") || 12 // @desc:Font size of the spinner's text.
     property int spinnerIconSize: config.intValue("LoginScreen.LoginArea.Spinner/icon-size") || 32 // @desc:Size of the spinning icon.
@@ -142,7 +140,7 @@ QtObject {
     property int spinnerSpacing: config.intValue("LoginScreen.LoginArea.Spinner/spacing") // @desc:Spacing between the spinning icon and its text.
 
     // [LoginScreen.LoginArea.WarningMessage]
-    property string warningMessageFontFamily: config.stringValue("LoginScreen.LoginArea.WarningMessage/font-family") || "RedHatDisplay" // @desc:Font family of the warning message.
+    property string warningMessageFontFamily: config.stringValue("LoginScreen.LoginArea.WarningMessage/font-family") || "Supermercado" // @desc:Font family of the warning message.
     property int warningMessageFontSize: config.intValue("LoginScreen.LoginArea.WarningMessage/font-size") || 11 // @desc:Font size of the warning message.
     property int warningMessageFontWeight: config.intValue("LoginScreen.LoginArea.WarningMessage/font-weight") || 400 // @desc:Font weight of the warning message. 400 = regular, 600 = bold, 800 = black
     property color warningMessageNormalColor: config.stringValue("LoginScreen.LoginArea.WarningMessage/normal-color") || "#FFFFFF" // @desc:Color of the warning message for normal messages.
@@ -158,7 +156,7 @@ QtObject {
     property int menuAreaButtonsSize: config.intValue("LoginScreen.MenuArea.Buttons/size") || 45 // @desc:Size of the menu buttons.
     property int menuAreaButtonsBorderRadius: config.intValue("LoginScreen.MenuArea.Buttons/border-radius") // @desc:Border radius of the menu buttons.
     property int menuAreaButtonsSpacing: config.intValue("LoginScreen.MenuArea.Buttons/spacing") // @desc:Spacing between menu buttons placed in the same position.
-    property string menuAreaButtonsFontFamily: config.stringValue("LoginScreen.MenuArea.Buttons/font-family") || "RedHatDisplay" // @desc:Font family of the menu buttons.
+    property string menuAreaButtonsFontFamily: config.stringValue("LoginScreen.MenuArea.Buttons/font-family") || "Supermercado" // @desc:Font family of the menu buttons.
 
     // [LoginScreen.MenuArea.Popups]
     property int menuAreaPopupsMaxHeight: config.intValue("LoginScreen.MenuArea.Popups/max-height") || 300 // @desc:Max height of the popups.
@@ -173,7 +171,7 @@ QtObject {
     property real menuAreaPopupsActiveOptionBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Popups/active-option-background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the hovered/focused item in the popup.
     property color menuAreaPopupsContentColor: config.stringValue("LoginScreen.MenuArea.Popups/content-color") || "#FFFFFF" // @desc:Color of the text of the non-selected items in the popup.
     property color menuAreaPopupsActiveContentColor: config.stringValue("LoginScreen.MenuArea.Popups/active-content-color") || "#FFFFFF" // @desc:Color of the text of the hovered/focused item in the popup.
-    property string menuAreaPopupsFontFamily: config.stringValue("LoginScreen.MenuArea.Popups/font-family") || "RedHatDisplay" // @desc:Font family of the popups.
+    property string menuAreaPopupsFontFamily: config.stringValue("LoginScreen.MenuArea.Popups/font-family") || "Supermercado" // @desc:Font family of the popups.
     property int menuAreaPopupsBorderSize: config.intValue("LoginScreen.MenuArea.Popups/border-size") // @desc:Size of the border of the popups.
     property color menuAreaPopupsBorderColor: config.stringValue("LoginScreen.MenuArea.Popups/border-color") || "#FFFFFF" // @desc:Color of the border of the popups.
     property int menuAreaPopupsFontSize: config.intValue("LoginScreen.MenuArea.Popups/font-size") || 11 // @desc:Font size of the popups.
@@ -196,24 +194,6 @@ QtObject {
     property int sessionBorderSize: config.intValue("LoginScreen.MenuArea.Session/border-size") // @desc:Size of the border of the session button. The color of the border is defined by 'content-color' and 'active-content-color'.
     property int sessionFontSize: config.intValue("LoginScreen.MenuArea.Session/font-size") || 10 // @desc:Font size of the session button.
     property int sessionIconSize: config.intValue("LoginScreen.MenuArea.Session/icon-size") || 24 // @desc:Size of the icon in the session button.
-
-    // [LoginScreen.MenuArea.Layout]
-    property bool layoutDisplay: config["LoginScreen.MenuArea.Layout/display"] === "false" ? false : true // @desc:Whether or not to display the layout button.
-    property string layoutPosition: config.stringValue("LoginScreen.MenuArea.Layout/position") // @possible:'top-left' | 'top-center' | 'top-right' | 'center-left' | 'center-right' | 'bottom-left' | 'bottom-center' | 'bottom-right' @default:bottom-right @desc:Position of the layout button.
-    property int layoutIndex: config.intValue("LoginScreen.MenuArea.Layout/index") // @default:1 @desc:This number is used to sort menu buttons placed in the same position.
-    property string layoutPopupDirection: config.stringValue("LoginScreen.MenuArea.Layout/popup-direction") || "up" // @possible:'up' | 'down' | 'left' | 'right' @desc:Which direction to open the layout popup to.
-    property string layoutPopupAlign: config.stringValue("LoginScreen.MenuArea.Layout/popup-align") || "center" // @possible:'start' | 'center' | 'end' @desc:Alignment of the session popup.
-    property int layoutPopupWidth: config.intValue("LoginScreen.MenuArea.Layout/popup-width") || 180 // @desc:Width of the layout popup.
-    property bool layoutDisplayLayoutName: config['LoginScreen.MenuArea.Layout/display-layout-name'] === "false" ? false : true // @desc:Whether or not to display the country code of the current layout in the layout button.
-    property color layoutBackgroundColor: config.stringValue("LoginScreen.MenuArea.Layout/background-color") || "#FFFFFF" // @desc:Background color of the layout button.
-    property real layoutBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Layout/background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the layout button.
-    property real layoutActiveBackgroundOpacity: config.realValue("LoginScreen.MenuArea.Layout/active-background-opacity") // @possible:0.0 ≤ R ≤ 1.0 @desc:Opacity of the background of the layout button when hovered/focused.
-    property color layoutContentColor: config.stringValue("LoginScreen.MenuArea.Layout/content-color") || "#FFFFFF" // @desc:Color of the icon and text in the layout button.
-    property color layoutActiveContentColor: config.stringValue("LoginScreen.MenuArea.Layout/active-content-color") || "#FFFFFF" // @desc:Color of the icon and text in the layout button when hovered/focused.
-    property int layoutBorderSize: config.intValue("LoginScreen.MenuArea.Layout/border-size") // @desc:Size of the border of the layouts button. The color of the border is defined by 'content-color' and 'active-content-color'.
-    property int layoutFontSize: config.intValue("LoginScreen.MenuArea.Layout/font-size") || 10 // @desc:Font size of the layout button.
-    property string layoutIcon: config.stringValue("LoginScreen.MenuArea.Layout/icon") || "language.svg" // @possible:File in `icons/` @desc:Icon in the layout button.
-    property int layoutIconSize: config.intValue("LoginScreen.MenuArea.Layout/icon-size") || 24 // @desc:Size of the icon in the layout button.
 
     // [LoginScreen.MenuArea.Keyboard]
     property bool keyboardDisplay: config["LoginScreen.MenuArea.Keyboard/display"] === "false" ? false : true // @desc:Whether or not to display the virtual keyboard toggle button.
@@ -264,7 +244,7 @@ QtObject {
 
     // [Tooltips]
     property bool tooltipsEnable: config['Tooltips/enable'] === "false" ? false : true // @desc:Whether or not to show tooltips when hovering over buttons.
-    property string tooltipsFontFamily: config.stringValue("Tooltips/font-family") || "RedHatDisplay" // @desc:Font family of the tooltips.
+    property string tooltipsFontFamily: config.stringValue("Tooltips/font-family") || "Supermercado" // @desc:Font family of the tooltips.
     property int tooltipsFontSize: config.intValue("Tooltips/font-size") || 11 // @desc:Font size of the tooltips.
     property color tooltipsContentColor: config.stringValue("Tooltips/content-color") || "#FFFFFF" // @desc:Color of the text in tooltips.
     property color tooltipsBackgroundColor: config.stringValue("Tooltips/background-color") || "#FFFFFF" // @desc:Color of the background of the tooltips.
@@ -283,14 +263,6 @@ QtObject {
                 index: sessionIndex,
                 def_index: 0,
                 position: available_positions.includes(sessionPosition) ? sessionPosition : "bottom-left"
-            });
-
-        if (layoutDisplay)
-            menus.push({
-                name: "layout",
-                index: layoutIndex,
-                def_index: 1,
-                position: available_positions.includes(layoutPosition) ? layoutPosition : "bottom-right"
             });
 
         if (keyboardDisplay)
@@ -316,6 +288,6 @@ QtObject {
     function getIcon(iconName) {
         var ext_arr = iconName.split(".");
         var ext = ext_arr.length > 1 ? ext_arr[ext_arr.length - 1] : "";
-        return `../icons/${iconName}${ext === "" ? ".svg" : ""}`;
+        return Qt.resolvedUrl(`../icons/${iconName}${ext === "" ? ".svg" : ""}`);
     }
 }

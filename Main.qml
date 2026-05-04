@@ -9,9 +9,8 @@ Item {
     id: root
     state: Config.lockScreenDisplay ? "lockState" : "loginState"
 
-    // TODO: Add own translations: https://github.com/sddm/sddm/wiki/Localization
-    TextConstants {
-        id: textConstants
+    FontLoader {
+        source: "fonts/supermercado-one/SupermercadoOne-Regular.ttf"
     }
 
     property bool capsLockOn: false
@@ -114,7 +113,10 @@ Item {
             property bool displayColor: root.state === "lockState" && Config.lockScreenUseBackgroundColor || root.state === "loginState" && Config.loginScreenUseBackgroundColor
             property string placeholder: Config.animatedBackgroundPlaceholder
 
-            source: !isVideo ? "backgrounds/" + tsource : (placeholder.length > 0 ? "backgrounds/" + placeholder : "")
+            source: {
+                if (tsource.startsWith("/") || tsource.startsWith("file://") || tsource.startsWith("qrc:/")) return tsource;
+                return !isVideo ? "backgrounds/" + tsource : (placeholder.length > 0 ? "backgrounds/" + placeholder : "");
+            }
             cache: true
             mipmap: true
             fillMode: {
@@ -132,7 +134,12 @@ Item {
 
             MediaPlayer {
                 id: mediaPlayer
-                source: backgroundImage.isVideo ? Qt.resolvedUrl("backgrounds/" + backgroundImage.tsource) : ""
+                source: {
+                    if (!backgroundImage.isVideo) return "";
+                    if (backgroundImage.tsource.startsWith("/") || backgroundImage.tsource.startsWith("file://") || backgroundImage.tsource.startsWith("qrc:/")) 
+                        return backgroundImage.tsource;
+                    return Qt.resolvedUrl("backgrounds/" + backgroundImage.tsource);
+                }
                 loops: MediaPlayer.Infinite
                 videoOutput: backgroundVideoOutput
                 audioOutput: AudioOutput {

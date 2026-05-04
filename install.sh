@@ -18,6 +18,16 @@ THEMES_DIR="/usr/share/sddm/themes"
 FONTS_DIR="/usr/share/fonts"
 SDDM_CONF="/etc/sddm.conf"
 SCRIPT_PATH=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+CUSTOM_BACKGROUND=""
+
+# Parse arguments
+while [[ "$#" -gt 0 ]]; do
+    case $1 in
+        --background) CUSTOM_BACKGROUND="$2"; shift ;;
+        *) echo "Unknown parameter passed: $1"; exit 1 ;;
+    esac
+    shift
+done
 
 echo -e "${CYAN}${BOLD}==>${RESET} ${BOLD}Installing lingSDDM Theme...${RESET}"
 
@@ -53,8 +63,18 @@ copy_theme() {
     sudo mkdir -p "${THEMES_DIR}/${THEME_NAME}"
     sudo cp -rf "${SCRIPT_PATH}"/* "${THEMES_DIR}/${THEME_NAME}/"
     # Remove unnecessary files from destination
+    sudo rm -rf "${THEMES_DIR}/${THEME_NAME}/nix"
+    sudo rm -rf "${THEMES_DIR}/${THEME_NAME}/.git"
     sudo rm -f "${THEMES_DIR}/${THEME_NAME}/install.sh"
     sudo rm -f "${THEMES_DIR}/${THEME_NAME}/README.md"
+    sudo rm -f "${THEMES_DIR}/${THEME_NAME}/flake.nix"
+    sudo rm -f "${THEMES_DIR}/${THEME_NAME}/flake.lock"
+
+    # Update theme.conf if custom background is provided
+    if [ -n "$CUSTOM_BACKGROUND" ]; then
+        echo -e "${CYAN}${BOLD}  ->${RESET} Setting custom background to ${CUSTOM_BACKGROUND}..."
+        sudo sed -i "s|^background =.*|background = \"${CUSTOM_BACKGROUND}\"|" "${THEMES_DIR}/${THEME_NAME}/theme.conf"
+    fi
 }
 
 # 3. Install Fonts

@@ -4,7 +4,7 @@ import QtQuick.Controls
 
 Rectangle {
     id: avatar
-    property string shape: Config.avatarShape
+    property string shape: "square"
     property string source: ""
     property bool active: false
     property int squareRadius: (shape == "circle") ? width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius * Config.generalScale) // min: 1
@@ -32,7 +32,15 @@ Rectangle {
 
     Image {
         id: faceImage
-        source: parent.source
+        source: {
+            if (parent.source === "" || parent.source === undefined) return Config.getIcon("user-default");
+            // If it's a system default path, override it with our custom one
+            var src = parent.source.toString();
+            if (src.indexOf("/usr/share/sddm/faces/") !== -1 || src.indexOf("system-user") !== -1 || src.indexOf("default.face.icon") !== -1) {
+                return Config.getIcon("user-default");
+            }
+            return parent.source;
+        }
         anchors.fill: parent
         mipmap: true
         antialiasing: true

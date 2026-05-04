@@ -1,5 +1,8 @@
-{ stdenv, lib }:
-
+{
+  stdenv,
+  lib,
+  background ? null,
+}:
 stdenv.mkDerivation {
   pname = "lingsddm";
   version = "1.0.0";
@@ -7,26 +10,29 @@ stdenv.mkDerivation {
   src = ../.;
 
   installPhase = ''
-    mkdir -p $out/share/sddm/themes/default
-    cp -r $src/* $out/share/sddm/themes/default/
-    chmod -R u+w $out/share/sddm/themes/default/
+    mkdir -p $out/share/sddm/themes/lingSDDM
+    cp -r $src/* $out/share/sddm/themes/lingSDDM/
+    chmod -R u+w $out/share/sddm/themes/lingSDDM/
+
+    ${lib.optionalString (background != null) ''
+      sed -i 's|^background =.*|background = "${background}"|' $out/share/sddm/themes/lingSDDM/theme.conf
+    ''}
 
     # Remove nix directory from the installed theme
-    rm -rf $out/share/sddm/themes/default/nix
-    rm -f $out/share/sddm/themes/default/flake.nix
-    rm -f $out/share/sddm/themes/default/flake.lock
+    rm -rf $out/share/sddm/themes/lingSDDM/nix
+    rm -f $out/share/sddm/themes/lingSDDM/flake.nix
+    rm -f $out/share/sddm/themes/lingSDDM/flake.lock
 
     # Install fonts to the standard location as well
     mkdir -p $out/share/fonts
-    cp -r fonts/redhat $out/share/fonts/
-    cp -r fonts/redhat-vf $out/share/fonts/
+    cp -r fonts/supermercado-one $out/share/fonts/
     chmod -R u+w $out/share/fonts/
   '';
 
   meta = with lib; {
-    description = "Optimized SDDM theme based on SilentSDDM.";
-    homepage = "https://github.com/imtraf/lingSDDM";
-    license = licenses.gpl3Plus;
+    description = "Optimized SDDM theme based.";
+    homepage = "https://github.com/imtraf/ling-sddm";
+    license = licenses.mit;
     platforms = platforms.linux;
   };
 }
