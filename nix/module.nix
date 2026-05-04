@@ -4,10 +4,8 @@ with lib;
 
 let
   cfg = config.services.displayManager.sddm.ling-sddm;
-  themeName = "ling-sddm";
-  pkg = pkgs.callPackage ./package.nix { 
-    background = cfg.background;
-  };
+  themeName = "default";
+  pkg = pkgs.callPackage ./package.nix { };
 
   users = attrNames config.users.users;
 in
@@ -26,12 +24,7 @@ in
       description = "Attrset mapping usernames to their avatar image paths.";
     };
 
-    background = mkOption {
-      type = types.nullOr (types.either types.path types.str);
-      default = null;
-      example = "./wallpaper.mp4";
-      description = "Path to the background video/image file.";
-    };
+
   };
 
   config = mkIf cfg.enable {

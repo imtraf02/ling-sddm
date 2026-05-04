@@ -1,15 +1,13 @@
 ; https://github.com/imtraf/lingSDDM
 
 [SddmGreeterTheme]
-Name=ling-sddm
+Name=default
 Type=sddm-theme
 Description=Optimized SDDM theme based on SilentSDDM.
 License=GPL-3.0-or-later
 Version=1.0.0
-Theme-Id=ling-sddm
+Theme-Id=default
 Theme-API=2.0
 MainScript=Main.qml
 Screenshot=backgrounds/default.png
 QtVersion=6
-
-ConfigFile=configs/default.conf

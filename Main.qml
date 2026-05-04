@@ -93,84 +93,48 @@ Item {
         y: geometry.y
         width: geometry.width
         height: geometry.height
-
-        // AnimatedImage { // `.gif`s are seg faulting with multi monitors... QT/SDDM issue?
-        Image {
-            // Background
-            id: backgroundImage
+        
+        Rectangle {
             anchors.fill: parent
+            color: "black"
+        }
 
-            property string tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
-            property bool isVideo: {
-                if (!tsource || tsource.toString().length === 0)
-                    return false;
-                var parts = tsource.toString().split(".");
-                if (parts.length === 0)
-                    return false;
-                var ext = parts[parts.length - 1];
-                return ["avi", "mp4", "mov", "mkv", "m4v", "webm"].indexOf(ext) !== -1;
-            }
-            property bool displayColor: root.state === "lockState" && Config.lockScreenUseBackgroundColor || root.state === "loginState" && Config.loginScreenUseBackgroundColor
-            property string placeholder: Config.animatedBackgroundPlaceholder
+        property string tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
 
+        MediaPlayer {
+            id: mediaPlayer
             source: {
-                if (tsource.startsWith("/") || tsource.startsWith("file://") || tsource.startsWith("qrc:/")) return tsource;
-                return !isVideo ? "backgrounds/" + tsource : (placeholder.length > 0 ? "backgrounds/" + placeholder : "");
+                if (!mainFrame.tsource || mainFrame.tsource.toString().length === 0) return "";
+                var src = mainFrame.tsource.startsWith("/") || mainFrame.tsource.startsWith("file://") || mainFrame.tsource.startsWith("qrc:/") 
+                    ? mainFrame.tsource 
+                    : Qt.resolvedUrl("./backgrounds/" + mainFrame.tsource);
+                return src;
             }
-            cache: true
-            mipmap: true
+            loops: MediaPlayer.Infinite
+            videoOutput: backgroundVideoOutput
+            audioOutput: AudioOutput {
+                muted: true
+            }
+            autoPlay: true
+            Component.onCompleted: play()
+        }
+
+        VideoOutput {
+            id: backgroundVideoOutput
+            anchors.fill: parent
             fillMode: {
-                if (Config.backgroundFillMode === "stretch") return Image.Stretch;
-                if (Config.backgroundFillMode === "fit") return Image.PreserveAspectFit;
-                return Image.PreserveAspectCrop;
-            }
-
-            Rectangle {
-                id: backgroundColor
-                anchors.fill: parent
-                color: root.state === "lockState" && Config.lockScreenUseBackgroundColor ? Config.lockScreenBackgroundColor : root.state === "loginState" && Config.loginScreenUseBackgroundColor ? Config.loginScreenBackgroundColor : "black"
-                visible: backgroundImage.displayColor || (backgroundVideoOutput.visible && backgroundImage.placeholder.length === 0)
-            }
-
-            MediaPlayer {
-                id: mediaPlayer
-                source: {
-                    if (!backgroundImage.isVideo) return "";
-                    if (backgroundImage.tsource.startsWith("/") || backgroundImage.tsource.startsWith("file://") || backgroundImage.tsource.startsWith("qrc:/")) 
-                        return backgroundImage.tsource;
-                    return Qt.resolvedUrl("backgrounds/" + backgroundImage.tsource);
-                }
-                loops: MediaPlayer.Infinite
-                videoOutput: backgroundVideoOutput
-                audioOutput: AudioOutput {
-                    muted: true
-                }
-                autoPlay: true
-                onErrorOccurred: function (error, errorString) {
-                    if (error !== MediaPlayer.NoError && (!backgroundImage.placeholder || backgroundImage.placeholder.length === 0)) {
-                        backgroundImage.displayColor = true;
-                    }
-                }
-            }
-
-            VideoOutput {
-                id: backgroundVideoOutput
-                anchors.fill: parent
-                visible: backgroundImage.isVideo && !backgroundImage.displayColor
-                fillMode: {
-                    if (Config.backgroundFillMode === "stretch") return VideoOutput.Stretch;
-                    if (Config.backgroundFillMode === "fit") return VideoOutput.PreserveAspectFit;
-                    return VideoOutput.PreserveAspectCrop;
-                }
+                if (Config.backgroundFillMode === "stretch") return VideoOutput.Stretch;
+                if (Config.backgroundFillMode === "fit") return VideoOutput.PreserveAspectFit;
+                return VideoOutput.PreserveAspectCrop;
             }
         }
 
         MultiEffect {
             // Background effects
             id: backgroundEffect
-            source: backgroundImage
+            source: backgroundVideoOutput
             anchors.fill: parent
-            blurEnabled: backgroundImage.visible && blurMax > 0
+            blurEnabled: blurMax > 0
             blur: blurMax > 0 ? 1.0 : 0.0
             autoPaddingEnabled: false
         }
