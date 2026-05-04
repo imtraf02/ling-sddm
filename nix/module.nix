@@ -3,15 +3,15 @@
 with lib;
 
 let
-  cfg = config.services.displayManager.sddm.ling-sddm;
-  themeName = "default";
+  cfg = config.services.displayManager.sddm.lingSDDM;
+  themeName = "lingSDDM";
   pkg = pkgs.callPackage ./package.nix { };
 
   users = attrNames config.users.users;
 in
 {
-  options.services.displayManager.sddm.ling-sddm = {
-    enable = mkEnableOption "ling-sddm SDDM theme";
+  options.services.displayManager.sddm.lingSDDM = {
+    enable = mkEnableOption "lingSDDM SDDM theme";
     
     profileIcons = mkOption {
       type = types.attrsOf types.path;
@@ -23,8 +23,6 @@ in
       '';
       description = "Attrset mapping usernames to their avatar image paths.";
     };
-
-
   };
 
   config = mkIf cfg.enable {
@@ -39,7 +37,6 @@ in
         pkgs.kdePackages.qtvirtualkeyboard
         pkgs.kdePackages.qt5compat
         pkgs.kdePackages.qtquick3d
-        pkgs.kdePackages.qtquickeffects
         pkgs.gst_all_1.gstreamer
         pkgs.gst_all_1.gst-plugins-base
         pkgs.gst_all_1.gst-plugins-good
