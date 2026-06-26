@@ -7,10 +7,9 @@ Rectangle {
     property string shape: "square"
     property string source: ""
     property bool active: false
-    property int squareRadius: (shape == "circle") ? width : (Config.avatarBorderRadius === 0 ? 1 : Config.avatarBorderRadius * Config.generalScale) // min: 1
-    property bool drawStroke: (active && Config.avatarActiveBorderSize > 0) || (!active && Config.avatarInactiveBorderSize > 0)
-    property color strokeColor: active ? Config.avatarActiveBorderColor : Config.avatarInactiveBorderColor
-    property int strokeSize: active ? (Config.avatarActiveBorderSize * Config.generalScale) : (Config.avatarInactiveBorderSize * Config.generalScale)
+    property int squareRadius: (shape == "circle") ? width : 30
+    property color strokeColor: "#ffaab4"
+    property int strokeSize: 3
     property string tooltipText: ""
     property bool showTooltip: false
 
@@ -21,20 +20,10 @@ Rectangle {
     color: "transparent"
     antialiasing: true
 
-    // Background
-    Rectangle {
-        anchors.fill: parent
-        radius: avatar.squareRadius
-        color: Config.passwordInputBackgroundColor
-        opacity: Config.passwordInputBackgroundOpacity
-        visible: true
-    }
-
     Image {
         id: faceImage
         source: {
             if (parent.source === "" || parent.source === undefined) return Config.getIcon("user-default");
-            // If it's a system default path, override it with our custom one
             var src = parent.source.toString();
             if (src.indexOf("/usr/share/sddm/faces/") !== -1 || src.indexOf("system-user") !== -1 || src.indexOf("default.face.icon") !== -1) {
                 return Config.getIcon("user-default");
@@ -58,7 +47,6 @@ Rectangle {
             }
         }
 
-        // Border
         Rectangle {
             anchors.fill: parent
             radius: avatar.squareRadius
@@ -68,6 +56,7 @@ Rectangle {
             antialiasing: true
         }
     }
+
     MultiEffect {
         id: faceEffects
         anchors.fill: faceImage
@@ -79,7 +68,7 @@ Rectangle {
         maskThresholdMax: 1.0
         maskThresholdMin: 0.5
         colorization: 0
-        colorizationColor: avatar.strokeColor === Config.passwordInputBackgroundColor && (1.0 - Config.passwordInputBackgroundOpacity < 0.3) ? Config.passwordInputContentColor : avatar.strokeColor
+        colorizationColor: avatar.strokeColor
     }
 
     Item {
@@ -110,17 +99,14 @@ Rectangle {
             if (avatar.shape === "square")
                 return true;
 
-            // Ellipse center and radius
             var centerX = width / 2;
             var centerY = height / 2;
             var radiusX = centerX;
             var radiusY = centerY;
 
-            // Distance from center
             var dx = (mouseArea.mouseX - centerX) / radiusX;
             var dy = (mouseArea.mouseY - centerY) / radiusY;
 
-            // Check if pointer is inside the ellipse
             return (dx * dx + dy * dy) <= 1.0;
         }
 
@@ -148,27 +134,28 @@ Rectangle {
         ToolTip {
             id: toolTipControl
             parent: mouseArea
-            enabled: Config.tooltipsEnable && !Config.tooltipsDisableUser
-            property bool shouldShow: enabled && avatar.showTooltip || (enabled && mouseArea.isCursorInsideAvatar() && avatar.tooltipText !== "")
+            enabled: true
+            property bool shouldShow: avatar.showTooltip || (mouseArea.isCursorInsideAvatar() && avatar.tooltipText !== "")
             visible: shouldShow
             delay: 300
             y: -height - 10
             x: (parent.width - width) / 2
-            
+
             contentItem: Text {
                 id: tooltipTextElement
-                font.family: Config.tooltipsFontFamily
-                font.pixelSize: Config.tooltipsFontSize * Config.generalScale
+                font.family: "system"
+                font.pixelSize: 11
                 text: avatar.tooltipText
-                color: Config.tooltipsContentColor
+                color: "#ffaab4"
             }
+
             background: Rectangle {
                 implicitWidth: tooltipTextElement.implicitWidth + (toolTipControl.leftPadding + toolTipControl.rightPadding)
                 implicitHeight: tooltipTextElement.implicitHeight + (toolTipControl.topPadding + toolTipControl.bottomPadding)
-                color: Config.tooltipsBackgroundColor
-                opacity: Config.tooltipsBackgroundOpacity
+                color: "#000000"
+                opacity: 1.0
                 border.width: 0
-                radius: Config.tooltipsBorderRadius * Config.generalScale
+                radius: 5
             }
         }
     }

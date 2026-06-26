@@ -4,7 +4,7 @@ import QtQuick.Controls
 
 ColumnLayout {
     id: selector
-    width: Config.powerPopupWidth * Config.generalScale
+    width: 100
     spacing: 2
 
     signal close
@@ -16,21 +16,21 @@ ColumnLayout {
         id: suspendButton
 
         preferredWidth: Layout.preferredWidth
-        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
-        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
+        Layout.preferredHeight: 30
+        Layout.preferredWidth: 100
 
         focus: selector.visible
         width: Layout.preferredWidth
         enabled: sddm.canSuspend
         icon: Config.getIcon("power-suspend.svg")
-        contentColor: Config.menuAreaPopupsContentColor
-        activeContentColor: Config.menuAreaPopupsActiveContentColor
-        fontFamily: Config.menuAreaPopupsFontFamily
+        contentColor: "#ffaab4"
+        activeContentColor: "#000000"
+        fontFamily: "system"
         backgroundColor: "transparent"
-        activeBackgroundColor: Config.menuAreaPopupsActiveOptionBackgroundColor
-        activeBackgroundOpacity: Config.menuAreaPopupsActiveOptionBackgroundOpacity
-        iconSize: Config.menuAreaPopupsIconSize
-        fontSize: Config.menuAreaPopupsFontSize
+        activeBackgroundColor: "#ffaab4"
+        activeBackgroundOpacity: 1.0
+        iconSize: 16
+        fontSize: 11
         onClicked: {
             selector.close();
             sddm.suspend();
@@ -45,21 +45,21 @@ ColumnLayout {
         id: rebootButton
 
         preferredWidth: Layout.preferredWidth
-        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
-        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
+        Layout.preferredHeight: 30
+        Layout.preferredWidth: 100
 
         focus: selector.visible
         width: Layout.preferredWidth
         enabled: sddm.canReboot
         icon: Config.getIcon("power-reboot.svg")
-        contentColor: Config.menuAreaPopupsContentColor
-        activeContentColor: Config.menuAreaPopupsActiveContentColor
-        fontFamily: Config.menuAreaPopupsFontFamily
+        contentColor: "#ffaab4"
+        activeContentColor: "#000000"
+        fontFamily: "system"
         backgroundColor: "transparent"
-        activeBackgroundColor: Config.menuAreaPopupsActiveOptionBackgroundColor
-        activeBackgroundOpacity: Config.menuAreaPopupsActiveOptionBackgroundOpacity
-        iconSize: Config.menuAreaPopupsIconSize
-        fontSize: Config.menuAreaPopupsFontSize
+        activeBackgroundColor: "#ffaab4"
+        activeBackgroundOpacity: 1.0
+        iconSize: 16
+        fontSize: 11
         onClicked: {
             selector.close();
             sddm.reboot();
@@ -74,21 +74,21 @@ ColumnLayout {
         id: shutdownButton
 
         preferredWidth: Layout.preferredWidth
-        Layout.preferredHeight: Config.menuAreaPopupsItemHeight * Config.generalScale
-        Layout.preferredWidth: Config.powerPopupWidth * Config.generalScale
+        Layout.preferredHeight: 30
+        Layout.preferredWidth: 100
 
         focus: selector.visible
         width: Layout.preferredWidth
         enabled: sddm.canPowerOff
         icon: Config.getIcon("power.svg")
-        contentColor: Config.menuAreaPopupsContentColor
-        activeContentColor: Config.menuAreaPopupsActiveContentColor
-        fontFamily: Config.menuAreaPopupsFontFamily
+        contentColor: "#ffaab4"
+        activeContentColor: "#000000"
+        fontFamily: "system"
         backgroundColor: "transparent"
-        activeBackgroundColor: Config.menuAreaPopupsActiveOptionBackgroundColor
-        activeBackgroundOpacity: Config.menuAreaPopupsActiveOptionBackgroundOpacity
-        iconSize: Config.menuAreaPopupsIconSize
-        fontSize: Config.menuAreaPopupsFontSize
+        activeBackgroundColor: "#ffaab4"
+        activeBackgroundOpacity: 1.0
+        iconSize: 16
+        fontSize: 11
         onClicked: {
             selector.close();
             sddm.powerOff();

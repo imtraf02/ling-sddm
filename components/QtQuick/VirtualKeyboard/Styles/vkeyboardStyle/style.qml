@@ -13,26 +13,26 @@ KeyboardStyle {
     id: vkeyboardStyle
 
     readonly property bool compactSelectionList: [InputEngine.InputMode.Pinyin, InputEngine.InputMode.Cangjie, InputEngine.InputMode.Zhuyin].indexOf(InputContext.inputEngine.inputMode) !== -1
-    readonly property string fontFamily: Config.menuAreaButtonsFontFamily
+    readonly property string fontFamily: ""
     readonly property real keyBackgroundMargin: Math.round(8 * scaleHint)
     readonly property real keyContentMargin: Math.round(40 * scaleHint)
     readonly property real keyIconScale: scaleHint * 0.8
-    readonly property string resourcePrefix: "../../../../../icons/"
+    readonly property string resourcePrefix: "../../../../../assets/icons/"
 
     readonly property string inputLocale: InputContext.locale
-    property color primaryColor: Config.virtualKeyboardPrimaryColor
-    property color primaryLightColor: Config.virtualKeyboardKeyActiveBackgroundColor
-    property color primaryDarkColor: Config.virtualKeyboardKeyColor
-    property color textOnPrimaryColor: Config.virtualKeyboardKeyContentColor
-    property color secondaryColor: Config.virtualKeyboardSelectionBackgroundColor
-    property color secondaryLightColor: Config.virtualKeyboardPrimaryColor
-    property color secondaryDarkColor: Config.virtualKeyboardPrimaryColor
-    property color textOnSecondaryColor: Config.virtualKeyboardSelectionContentColor
+    property color primaryColor: "#8c90c2"
+    property color primaryLightColor: "#ffaab4"
+    property color primaryDarkColor: "#000000"
+    property color textOnPrimaryColor: "#ffaab4"
+    property color secondaryColor: "#303030"
+    property color secondaryLightColor: "#8c90c2"
+    property color secondaryDarkColor: "#8c90c2"
+    property color textOnSecondaryColor: "#ffaab4"
 
     property color normalKeyBackgroundColor: primaryDarkColor
     property color highlightedKeyBackgroundColor: primaryLightColor
-    property real highlightedKeyBackgroundOpacity: Config.virtualKeyboardKeyActiveOpacity
-    property real normalKeyBackgroundOpacity: Config.virtualKeyboardKeyOpacity
+    property real highlightedKeyBackgroundOpacity: 0.0
+    property real normalKeyBackgroundOpacity: 1.0
     property color capsLockKeyAccentColor: secondaryColor
     property color modeKeyAccentColor: textOnPrimaryColor
     property color keyTextColor: textOnPrimaryColor
@@ -96,20 +96,20 @@ KeyboardStyle {
     keyboardBackground: Rectangle {
         color: "transparent"
         border {
-            width: Config.virtualKeyboardBorderSize
-            color: Config.virtualKeyboardBorderColor
+            width: 2
+            color: "#ffaab4"
         }
         radius: 10
 
 		// Little hack to "fix" the background for the `digits` input method.
 		// I need to write a new style, or hopefully find a better alternative to `qtvirtualkeyboard`.
-		visible: Config.virtualKeyboardRestrictInput !== "digits"
+		visible: true
 
         Rectangle {
             z: parent.z - 1
             anchors.fill: parent
-            color: Config.virtualKeyboardBackgroundColor
-            opacity: Config.virtualKeyboardBackgroundOpacity
+            color: "#000000"
+            opacity: 1.0
             radius: 10
         }
     }
@@ -139,11 +139,11 @@ KeyboardStyle {
 
             Rectangle {
                 anchors.fill: parent
-                visible: Config.virtualKeyboardBorderSize > 0
+                visible: 2 > 0
                 color: "transparent"
                 border {
-                    width: Config.virtualKeyboardBorderSize
-                    color: Config.virtualKeyboardBorderColor
+                    width: 2
+                    color: "#ffaab4"
                 }
                 radius: parent.radius
             }
@@ -252,11 +252,11 @@ KeyboardStyle {
 
             Rectangle {
                 anchors.fill: parent
-                visible: Config.virtualKeyboardBorderSize > 0
+                visible: 2 > 0
                 color: "transparent"
                 border {
-                    width: Config.virtualKeyboardBorderSize
-                    color: Config.virtualKeyboardBorderColor
+                    width: 2
+                    color: "#ffaab4"
                 }
                 radius: parent.radius
             }
@@ -332,11 +332,11 @@ KeyboardStyle {
 
             Rectangle {
                 anchors.fill: parent
-                visible: Config.virtualKeyboardBorderSize > 0
+                visible: 2 > 0
                 color: "transparent"
                 border {
-                    width: Config.virtualKeyboardBorderSize
-                    color: Config.virtualKeyboardBorderColor
+                    width: 2
+                    color: "#ffaab4"
                 }
                 radius: parent.radius
             }
@@ -412,11 +412,11 @@ KeyboardStyle {
 
             Rectangle {
                 anchors.fill: parent
-                visible: Config.virtualKeyboardBorderSize > 0
+                visible: 2 > 0
                 color: "transparent"
                 border {
-                    width: Config.virtualKeyboardBorderSize
-                    color: Config.virtualKeyboardBorderColor
+                    width: 2
+                    color: "#ffaab4"
                 }
                 radius: parent.radius
             }
@@ -532,11 +532,11 @@ KeyboardStyle {
 
             Rectangle {
                 anchors.fill: parent
-                visible: Config.virtualKeyboardBorderSize > 0
+                visible: 2 > 0
                 color: "transparent"
                 border {
-                    width: Config.virtualKeyboardBorderSize
-                    color: Config.virtualKeyboardBorderColor
+                    width: 2
+                    color: "#ffaab4"
                 }
                 radius: parent.radius
             }
@@ -618,11 +618,11 @@ KeyboardStyle {
 
             Rectangle {
                 anchors.fill: parent
-                visible: Config.virtualKeyboardBorderSize > 0
+                visible: 2 > 0
                 color: "transparent"
                 border {
-                    width: Config.virtualKeyboardBorderSize
-                    color: Config.virtualKeyboardBorderColor
+                    width: 2
+                    color: "#ffaab4"
                 }
                 radius: parent.radius
             }
@@ -728,11 +728,11 @@ KeyboardStyle {
 
             Rectangle {
                 anchors.fill: parent
-                visible: Config.virtualKeyboardBorderSize > 0
+                visible: 2 > 0
                 color: "transparent"
                 border {
-                    width: Config.virtualKeyboardBorderSize
-                    color: Config.virtualKeyboardBorderColor
+                    width: 2
+                    color: "#ffaab4"
                 }
                 radius: parent.radius
             }
@@ -798,11 +798,11 @@ KeyboardStyle {
 
             Rectangle {
                 anchors.fill: parent
-                visible: Config.virtualKeyboardBorderSize > 0
+                visible: 2 > 0
                 color: "transparent"
                 border {
-                    width: Config.virtualKeyboardBorderSize
-                    color: Config.virtualKeyboardBorderColor
+                    width: 2
+                    color: "#ffaab4"
                 }
                 radius: parent.radius
             }
@@ -874,11 +874,11 @@ KeyboardStyle {
 
             Rectangle {
                 anchors.fill: parent
-                visible: Config.virtualKeyboardBorderSize > 0
+                visible: 2 > 0
                 color: "transparent"
                 border {
-                    width: Config.virtualKeyboardBorderSize
-                    color: Config.virtualKeyboardBorderColor
+                    width: 2
+                    color: "#ffaab4"
                 }
                 radius: parent.radius
             }
@@ -963,11 +963,11 @@ KeyboardStyle {
 
             Rectangle {
                 anchors.fill: parent
-                visible: Config.virtualKeyboardBorderSize > 0
+                visible: 2 > 0
                 color: "transparent"
                 border {
-                    width: Config.virtualKeyboardBorderSize
-                    color: Config.virtualKeyboardBorderColor
+                    width: 2
+                    color: "#ffaab4"
                 }
                 radius: parent.radius
             }

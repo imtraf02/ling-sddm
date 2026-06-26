@@ -10,22 +10,22 @@ Item {
 
         IconButton {
             id: sessionButton
-            property bool showLabel: Config.sessionDisplaySessionName
-            preferredWidth: showLabel ? (Config.sessionButtonWidth === -1 ? undefined : Config.sessionButtonWidth) : Config.menuAreaButtonsSize
-            height: Config.menuAreaButtonsSize * Config.generalScale
-            iconSize: Config.sessionIconSize
-            fontSize: Config.sessionFontSize
+            property bool showLabel: true
+            preferredWidth: showLabel ? 100 : 45
+            height: 45
+            iconSize: 24
+            fontSize: 10
             enabled: loginScreen.state === "normal" || popup.visible
             active: popup.visible
-            contentColor: Config.sessionContentColor
-            activeContentColor: Config.sessionActiveContentColor
-            borderRadius: Config.menuAreaButtonsBorderRadius
-            borderSize: Config.sessionBorderSize
-            backgroundColor: Config.sessionBackgroundColor
-            backgroundOpacity: Config.sessionBackgroundOpacity
-            activeBackgroundColor: Config.sessionBackgroundColor
-            activeBackgroundOpacity: Config.sessionActiveBackgroundOpacity
-            fontFamily: Config.menuAreaButtonsFontFamily
+            contentColor: "#ffaab4"
+            activeContentColor: "#000000"
+            borderRadius: 5
+            borderSize: 0
+            backgroundColor: "#000000"
+            backgroundOpacity: 0
+            activeBackgroundColor: "#000000"
+            activeBackgroundOpacity: 0
+            fontFamily: "system"
             activeFocusOnTab: true
             focus: false
             onClicked: {
@@ -40,20 +40,20 @@ Item {
             Popup {
                 id: popup
                 parent: sessionButton
-                padding: Config.menuAreaPopupsPadding
+                padding: 5
                 background: Rectangle {
-                    color: Config.menuAreaPopupsBackgroundColor
-                    opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
+                    color: "#000000"
+                    opacity: 1.0
+                    radius: 5
 
                     Rectangle {
                         anchors.fill: parent
-                        visible: Config.menuAreaPopupsBorderSize > 0
+                        visible: true
                         radius: parent.radius
                         color: "transparent"
                         border {
-                            color: Config.menuAreaPopupsBorderColor
-                            width: Config.menuAreaPopupsBorderSize * Config.generalScale
+                            color: "#ffaab4"
+                            width: 2
                         }
                     }
                 }
@@ -91,7 +91,7 @@ Item {
                 }
 
                 Component.onCompleted: {
-                    [x, y] = menuArea.calculatePopupPos(Config.sessionPopupDirection, Config.sessionPopupAlign, popup, sessionButton);
+                    [x, y] = menuArea.calculatePopupPos("up", "center", popup, sessionButton);
                 }
             }
         }
@@ -103,20 +103,20 @@ Item {
         IconButton {
             id: keyboardButton
 
-            height: Config.menuAreaButtonsSize * Config.generalScale
-            width: Config.menuAreaButtonsSize * Config.generalScale
-            icon: Config.getIcon(Config.keyboardIcon)
-            iconSize: Config.keyboardIconSize
-            backgroundColor: Config.keyboardBackgroundColor
-            backgroundOpacity: Config.keyboardBackgroundOpacity
-            activeBackgroundColor: Config.keyboardBackgroundColor
-            activeBackgroundOpacity: Config.keyboardActiveBackgroundOpacity
-            contentColor: Config.keyboardContentColor
-            activeContentColor: Config.keyboardActiveContentColor
+            height: 45
+            width: 45
+            icon: Config.getIcon("keyboard.svg")
+            iconSize: 24
+            backgroundColor: "#000000"
+            backgroundOpacity: 0
+            activeBackgroundColor: "#000000"
+            activeBackgroundOpacity: 0
+            contentColor: "#ffaab4"
+            activeContentColor: "#000000"
             active: showKeyboard
-            fontFamily: Config.menuAreaButtonsFontFamily
-            borderRadius: Config.menuAreaButtonsBorderRadius
-            borderSize: Config.keyboardBorderSize
+            fontFamily: "system"
+            borderRadius: 5
+            borderSize: 0
             enabled: loginScreen.showKeyboard || loginScreen.state === "normal"
             activeFocusOnTab: true
             focus: false
@@ -133,20 +133,20 @@ Item {
         IconButton {
             id: powerButton
 
-            height: Config.menuAreaButtonsSize * Config.generalScale
-            width: Config.menuAreaButtonsSize * Config.generalScale
-            icon: Config.getIcon(Config.powerIcon)
-            iconSize: Config.powerIconSize
-            contentColor: Config.powerContentColor
-            activeContentColor: Config.powerActiveContentColor
-            fontFamily: Config.menuAreaButtonsFontFamily
+            height: 45
+            width: 45
+            icon: Config.getIcon("power.svg")
+            iconSize: 24
+            contentColor: "#ffaab4"
+            activeContentColor: "#000000"
+            fontFamily: "system"
             active: popup.visible
-            borderRadius: Config.menuAreaButtonsBorderRadius
-            borderSize: Config.powerBorderSize
-            backgroundColor: Config.powerBackgroundColor
-            backgroundOpacity: Config.powerBackgroundOpacity
-            activeBackgroundColor: Config.powerBackgroundColor
-            activeBackgroundOpacity: Config.powerActiveBackgroundOpacity
+            borderRadius: 5
+            borderSize: 0
+            backgroundColor: "#000000"
+            backgroundOpacity: 0
+            activeBackgroundColor: "#000000"
+            activeBackgroundOpacity: 0
             enabled: loginScreen.state === "normal" || popup.visible
             activeFocusOnTab: true
             focus: false
@@ -159,25 +159,25 @@ Item {
                 id: popup
                 parent: powerButton
                 background: Rectangle {
-                    color: Config.menuAreaPopupsBackgroundColor
-                    opacity: Config.menuAreaPopupsBackgroundOpacity
-                    radius: Config.menuAreaButtonsBorderRadius * Config.generalScale
+                    color: "#000000"
+                    opacity: 1.0
+                    radius: 5
 
                     Rectangle {
                         anchors.fill: parent
-                        visible: Config.menuAreaPopupsBorderSize > 0
+                        visible: true
                         radius: parent.radius
                         color: "transparent"
                         border {
-                            color: Config.menuAreaPopupsBorderColor
-                            width: Config.menuAreaPopupsBorderSize * Config.generalScale
+                            color: "#ffaab4"
+                            width: 2
                         }
                     }
                 }
                 dim: true
-                padding: Config.menuAreaPopupsPadding
+                padding: 5
                 Overlay.modal: Rectangle {
-                    color: "transparent"  // Remove dim background (dim: false doesn't work here)
+                    color: "transparent"
                     MouseArea {
                         anchors.fill: parent
                         hoverEnabled: true
@@ -204,187 +204,48 @@ Item {
                 }
 
                 Component.onCompleted: {
-                    [x, y] = menuArea.calculatePopupPos(Config.powerPopupDirection, Config.powerPopupAlign, popup, powerButton);
+                    [x, y] = menuArea.calculatePopupPos("up", "center", popup, powerButton);
                 }
             }
         }
     }
 
     Row {
-        // top_left
-        id: topLeftButtons
-
-        height: childrenRect.height
-        width: childrenRect.width
-        spacing: Config.menuAreaButtonsSpacing // 10
-
-        anchors {
-            top: parent.top
-            left: parent.left
-            topMargin: Config.menuAreaButtonsMarginTop
-            leftMargin: Config.menuAreaButtonsMarginLeft
-        }
-    }
-
-    Row {
-        // top_center
-        id: topCenterButtons
-
-        height: childrenRect.height
-        width: childrenRect.width
-        spacing: Config.menuAreaButtonsSpacing // 10
-
-        anchors {
-            top: parent.top
-            horizontalCenter: parent.horizontalCenter
-            topMargin: Config.menuAreaButtonsMarginTop
-        }
-    }
-
-    Row {
-        // top_right
-        id: topRightButtons
-
-        height: childrenRect.height
-        width: childrenRect.width
-        spacing: Config.menuAreaButtonsSpacing // 10
-
-        anchors {
-            top: parent.top
-            right: parent.right
-            topMargin: Config.menuAreaButtonsMarginTop
-            rightMargin: Config.menuAreaButtonsMarginRight
-        }
-    }
-
-    Column {
-        // center_left
-        id: centerLeftButtons
-
-        height: childrenRect.height
-        width: childrenRect.width
-        spacing: Config.menuAreaButtonsSpacing // 10
-
-        anchors {
-            left: parent.left
-            verticalCenter: parent.verticalCenter
-            leftMargin: Config.menuAreaButtonsMarginLeft
-        }
-    }
-
-    Column {
-        // center_right
-        id: centerRightButtons
-
-        height: childrenRect.height
-        width: childrenRect.width
-        spacing: Config.menuAreaButtonsSpacing // 10
-
-        anchors {
-            right: parent.right
-            verticalCenter: parent.verticalCenter
-            rightMargin: Config.menuAreaButtonsMarginRight
-        }
-    }
-
-    Row {
-        // bottom_left
-        id: bottomLeftButtons
-
-        height: childrenRect.height
-        width: childrenRect.width
-        spacing: Config.menuAreaButtonsSpacing // 10
-
-        anchors {
-            bottom: parent.bottom
-            left: parent.left
-            bottomMargin: Config.menuAreaButtonsMarginBottom
-            leftMargin: Config.menuAreaButtonsMarginLeft
-        }
-    }
-
-    Row {
-        // bottom_center
         id: bottomCenterButtons
 
         height: childrenRect.height
         width: childrenRect.width
-        spacing: Config.menuAreaButtonsSpacing // 10
+        spacing: 10
 
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            bottomMargin: Config.menuAreaButtonsMarginBottom
+            bottomMargin: 0
         }
     }
 
-    Row {
-        // bottom_right
-        id: bottomRightButtons
-
-        height: childrenRect.height
-        width: childrenRect.width
-        spacing: Config.menuAreaButtonsSpacing // 10
-
-        anchors {
-            bottom: parent.bottom
-            right: parent.right
-            bottomMargin: Config.menuAreaButtonsMarginBottom
-            rightMargin: Config.menuAreaButtonsMarginRight
-        }
-    }
-
-    // FIX: Critical createObject memory leak prevention
     property var createdObjects: []
 
     Component.onCompleted: {
-        var menus = Config.sortMenuButtons();
+        var createdObject;
 
-        for (var i = 0; i < menus.length; i++) {
-            var pos;
-            switch (menus[i].position) {
-            case "top-left":
-                pos = topLeftButtons;
-                break;
-            case "top-center":
-                pos = topCenterButtons;
-                break;
-            case "top-right":
-                pos = topRightButtons;
-                break;
-            case "center-left":
-                pos = centerLeftButtons;
-                break;
-            case "center-right":
-                pos = centerRightButtons;
-                break;
-            case "bottom-left":
-                pos = bottomLeftButtons;
-                break;
-            case "bottom-center":
-                pos = bottomCenterButtons;
-                break;
-            case "bottom-right":
-                pos = bottomRightButtons;
-                break;
-            }
+        createdObject = sessionMenuComponent.createObject(bottomCenterButtons, {});
+        if (createdObject) {
+            createdObjects.push(createdObject);
+        }
 
-            var createdObject;
-            if (menus[i].name === "session")
-                createdObject = sessionMenuComponent.createObject(pos, {});
-            else if (menus[i].name === "keyboard")
-                createdObject = keyboardMenuComponent.createObject(pos, {});
-            else if (menus[i].name === "power")
-                createdObject = powerMenuComponent.createObject(pos, {});
+        createdObject = keyboardMenuComponent.createObject(bottomCenterButtons, {});
+        if (createdObject) {
+            createdObjects.push(createdObject);
+        }
 
-            if (createdObject) {
-                createdObjects.push(createdObject);
-            }
+        createdObject = powerMenuComponent.createObject(bottomCenterButtons, {});
+        if (createdObject) {
+            createdObjects.push(createdObject);
         }
     }
 
     Component.onDestruction: {
-        // FIX: Critical createObject memory leak cleanup
         for (var i = 0; i < createdObjects.length; i++) {
             if (createdObjects[i]) {
                 createdObjects[i].destroy();
@@ -394,7 +255,7 @@ Item {
     }
 
     function calculatePopupPos(direction, align, popup, button) {
-        var popupMargin = Config.menuAreaPopupsMargin;
+        var popupMargin = 5;
         var x = 0, y = 0;
 
         if (direction === "up") {

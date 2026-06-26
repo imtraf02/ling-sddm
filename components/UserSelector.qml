@@ -28,17 +28,14 @@ Item {
         interactive: false
         boundsBehavior: Flickable.StopAtBounds
 
-        // Center the active avatar
-        preferredHighlightBegin: selector.orientation === "horizontal" ? (width - Config.avatarActiveSize * Config.generalScale) / 2 : (height - Config.avatarActiveSize * Config.generalScale) / 2
+        preferredHighlightBegin: selector.orientation === "horizontal" ? (width - 100) / 2 : (height - 100) / 2
         preferredHighlightEnd: preferredHighlightBegin
         highlightRangeMode: ListView.StrictlyEnforceRange
-        // Padding for centering
         leftMargin: selector.orientation === "horizontal" ? preferredHighlightBegin : 0
         rightMargin: leftMargin
         topMargin: selector.orientation === "horizontal" ? 0 : preferredHighlightBegin
         bottomMargin: topMargin
 
-        // Animation properties
         highlightMoveDuration: 200
         highlightResizeDuration: 200
         highlightMoveVelocity: -1
@@ -57,8 +54,8 @@ Item {
         }
 
         delegate: Rectangle {
-            width: index === userList.currentIndex ? (Config.avatarActiveSize * Config.generalScale) : (Config.avatarInactiveSize * Config.generalScale)
-            height: index === userList.currentIndex ? (Config.avatarActiveSize * Config.generalScale) : (Config.avatarInactiveSize * Config.generalScale)
+            width: index === userList.currentIndex ? 100 : 70
+            height: index === userList.currentIndex ? 100 : 70
             anchors {
                 verticalCenter: selector.orientation === "horizontal" ? parent.verticalCenter : undefined
                 horizontalCenter: selector.orientation === "horizontal" ? undefined : parent.horizontalCenter
@@ -67,14 +64,12 @@ Item {
             visible: selector.listUsers || index === userList.currentIndex
 
             Behavior on width {
-                enabled: Config.enableAnimations
                 NumberAnimation {
                     duration: 200
                     easing.type: Easing.OutQuad
                 }
             }
             Behavior on height {
-                enabled: Config.enableAnimations
                 NumberAnimation {
                     duration: 200
                     easing.type: Easing.OutQuad
@@ -82,7 +77,6 @@ Item {
             }
             opacity: selector.listUsers || index === userList.currentIndex ? 1.0 : 0.0
             Behavior on opacity {
-                enabled: Config.enableAnimations
                 NumberAnimation {
                     duration: 200
                 }
@@ -93,13 +87,12 @@ Item {
                 height: parent.height
                 source: model.icon
                 active: index === userList.currentIndex
-                opacity: active ? 1.0 : Config.avatarInactiveOpacity
-                enabled: userModel.rowCount() > 1 // No need to open the selector if there's only one user
-                tooltipText: active && selector.listUsers ? "Close user selection" : (active && !listUsers ? "Select user" : `Select user ${model.name}`)
+                opacity: active ? 1.0 : 0.35
+                enabled: userModel.rowCount() > 1
+                tooltipText: active && selector.listUsers ? "Close user selection" : (active && !listUsers ? "Select user" : "Select user " + model.name)
                 showTooltip: selector.focus && !listUsers && active
 
                 Behavior on opacity {
-                    enabled: Config.enableAnimations
                     NumberAnimation {
                         duration: 200
                     }
@@ -107,12 +100,10 @@ Item {
 
                 onClicked: {
                     if (!selector.listUsers) {
-                        // Open selector
                         selector.openUserList();
                         selector.focus = true;
                         userList.model.reset();
                     } else {
-                        // Collapse the list if the selected user gets another click
                         if (index === userList.currentIndex) {
                             selector.closeUserList();
                             selector.focus = false;
@@ -158,7 +149,6 @@ Item {
             root.capsLockOn = !root.capsLockOn;
             event.accepted = true;
         } else {
-            // Do not steal other keys
             event.accepted = false;
         }
     }

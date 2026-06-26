@@ -4,24 +4,21 @@ import QtQuick.Effects
 
 Item {
     id: spinnerContainer
-    width: (spinner.width + Config.spinnerSpacing + spinnerText.width) * Config.generalScale
-    height: childrenRect.height * Config.generalScale
+    width: Math.max(spinner.width, spinnerText.width)
+    height: spinner.height + 5 + spinnerText.height
 
     Behavior on opacity {
-        enabled: Config.enableAnimations
         NumberAnimation {
             duration: 150
         }
     }
     Behavior on visible {
-        enabled: Config.enableAnimations && Config.spinnerDisplayText
         ParallelAnimation {
-            running: spinnerContainer.visible && Config.spinnerDisplayText
             NumberAnimation {
                 target: spinnerText
-                property: Config.loginAreaPosition === "left" ? "anchors.leftMargin" : (Config.loginAreaPosition === "right" ? "anchors.rightMargin" : "anchors.topMargin")
+                property: "anchors.topMargin"
                 from: -spinner.height
-                to: Config.spinnerSpacing
+                to: 5
                 duration: 300
                 easing.type: Easing.OutQuart
             }
@@ -37,38 +34,29 @@ Item {
 
     Image {
         id: spinner
-        source: Config.getIcon(Config.spinnerIcon)
-        width: Config.spinnerIconSize * Config.generalScale
+        source: Config.getIcon("spinner.svg")
+        width: 30
         height: width
         sourceSize.width: width
         sourceSize.height: height
         visible: false
-
-        Component.onCompleted: {
-            if (Config.loginAreaPosition === "left") {
-                anchors.left = parent.left;
-                anchors.verticalCenter = parent.verticalCenter;
-            } else if (Config.loginAreaPosition === "right") {
-                anchors.right = parent.right;
-                anchors.verticalCenter = parent.verticalCenter;
-            } else {
-                anchors.top = parent.top;
-                anchors.horizontalCenter = parent.horizontalCenter;
-            }
-        }
+        anchors.top: parent.top
+        anchors.horizontalCenter: parent.horizontalCenter
     }
+
     MultiEffect {
         id: spinnerEffect
         source: spinner
         anchors.fill: spinner
         colorization: 1
-        colorizationColor: Config.spinnerColor
-        opacity: Config.spinnerDisplayText ? 0.0 : 1.0
+        colorizationColor: "#ffaab4"
+        opacity: 1.0
         antialiasing: true
     }
+
     RotationAnimation {
         target: spinnerEffect
-        running: spinnerContainer.visible && Config.enableAnimations
+        running: spinnerContainer.visible
         from: 0
         to: 360
         loops: Animation.Infinite
@@ -77,41 +65,21 @@ Item {
 
     Text {
         id: spinnerText
-        visible: Config.spinnerDisplayText
-        text: Config.spinnerText
-        color: Config.spinnerColor
-        font.pixelSize: Config.spinnerFontSize * Config.generalScale
-        font.weight: Config.spinnerFontWeight
-        font.family: Config.spinnerFontFamily
+        text: "Logging in"
+        color: "#ffaab4"
+        font.pixelSize: 14
+        font.weight: 600
+        font.family: "Supermercado"
 
-        Component.onCompleted: {
-            if (Config.loginAreaPosition === "left") {
-                anchors.left = spinner.right;
-                anchors.leftMargin = Config.spinnerSpacing;
-                anchors.verticalCenter = parent.verticalCenter;
-            } else if (Config.loginAreaPosition === "right") {
-                anchors.right = spinner.left;
-                anchors.rightMargin = Config.spinnerSpacing;
-                anchors.verticalCenter = parent.verticalCenter;
-            } else {
-                anchors.top = spinner.bottom;
-                anchors.topMargin = Config.spinnerSpacing;
-                anchors.horizontalCenter = parent.horizontalCenter;
-            }
-        }
-
-        onVisibleChanged: {
-            if (visible && Config.enableAnimations && Config.spinnerDisplayText) {
-                spinnerTextInterval.running = true;
-            } else {
-                spinnerTextAnimation.running = false;
-                spinnerTextInterval.running = false;
-            }
+        anchors {
+            top: spinner.bottom
+            topMargin: 5
+            horizontalCenter: parent.horizontalCenter
         }
 
         SequentialAnimation on scale {
             id: spinnerTextAnimation
-            running: false
+            running: true
             loops: Animation.Infinite
             NumberAnimation {
                 from: 1.0
@@ -128,21 +96,7 @@ Item {
         }
     }
 
-    Timer {
-        id: spinnerTextInterval
-        interval: 3500
-        repeat: false
-        running: false
-        onTriggered: {
-            spinnerTextAnimation.running = true;
-        }
-    }
-
     Component.onDestruction: {
-        if (spinnerTextInterval) {
-            spinnerTextInterval.running = false;
-            spinnerTextInterval.stop();
-        }
         if (spinnerTextAnimation) {
             spinnerTextAnimation.running = false;
             spinnerTextAnimation.stop();

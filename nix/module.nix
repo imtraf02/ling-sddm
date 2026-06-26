@@ -30,18 +30,11 @@ in
       enable = true;
       theme = themeName;
       # Qt packages are propagated from the package derivation.
-      # GStreamer is added here for video background support.
       extraPackages = [
-        pkgs.kdePackages.qtmultimedia
         pkgs.kdePackages.qtsvg
         pkgs.kdePackages.qtvirtualkeyboard
         pkgs.kdePackages.qt5compat
         pkgs.kdePackages.qtquick3d
-        pkgs.gst_all_1.gstreamer
-        pkgs.gst_all_1.gst-plugins-base
-        pkgs.gst_all_1.gst-plugins-good
-        pkgs.gst_all_1.gst-plugins-bad
-        pkgs.gst_all_1.gst-libav
       ];
       # NOTE: Do NOT set QML2_IMPORT_PATH here.
       # sddm-greeter-qt6 uses Qt6 which ignores QML2_IMPORT_PATH (Qt5 only).

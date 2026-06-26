@@ -23,7 +23,7 @@
 
 ## ✨ Key Features
 
-- 🎥 **Dynamic Backgrounds**: Support for ultra-smooth video backgrounds (MP4, MKV, WebM) with customizable blur and brightness.
+- 🎨 **Custom Backgrounds**: Support for static image backgrounds with customizable blur and brightness.
 - 👤 **Animated Interactions**: Modern typing animations for password fields and smooth transitions for user selection.
 - ⌨️ **Virtual Keyboard**: Fully integrated support for Qt Virtual Keyboard with custom positioning.
 - ❄️ **NixOS Native**: Built-in Nix Flakes and NixOS module for seamless configuration on Nix-based systems.
@@ -55,7 +55,7 @@ inputs = {
 
   services.displayManager.sddm.ling-sddm = {
     enable = true;
-    background = ./.background.mp4; # Path to your custom video or image
+    background = ./.background.png; # Path to your custom image
     # Optional: custom profile icons
     profileIcons = {
       "imtraf" = ./.face; 
@@ -66,17 +66,17 @@ inputs = {
 
 ### 🐧 Manual Installation
 
-1. **Requirements**: `sddm`, `qt6-svg`, `qt6-virtualkeyboard`, `qt6-multimedia`.
+1. **Requirements**: `sddm`, `qt6-svg`, `qt6-virtualkeyboard`.
 2. **Setup**:
 ```bash
 git clone --depth=1 https://github.com/imtraf/ling-sddm.git
 cd ling-sddm
 chmod +x install.sh
-sudo ./install.sh --background path/to/wallpaper.mp4
+sudo ./install.sh --background /path/to/wallpaper.png
 ```
 
 > [!TIP]
-> You can omit the `--background` flag to use the default live wallpaper. You can also provide an absolute path to any video or image on your system.
+> You can omit the `--background` flag to use the default image wallpaper. You can also provide an absolute path to any image on your system.
 
 ---
 

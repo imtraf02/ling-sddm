@@ -1,174 +1,65 @@
 import QtQuick
-import QtQuick.Effects
 import QtQuick.Layouts
-import QtQuick.Controls
 
 Item {
     id: lockScreen
     signal loginRequested
 
-    // TODO: Support for weather info?
     ColumnLayout {
-        id: timePositioner
-        spacing: Config.dateMarginTop
+        anchors.left: parent.left
+        anchors.leftMargin: 150
+        anchors.verticalCenter: parent.verticalCenter
+        spacing: -15
+
         Text {
             id: time
-            visible: Config.clockDisplay
-            font.pixelSize: Config.clockFontSize * Config.generalScale
-            font.weight: Config.clockFontWeight
-            font.family: Config.clockFontFamily
-            color: Config.clockColor
-            Layout.alignment: Config.clockAlign === "left" ? Qt.AlignLeft : (Config.clockAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
+            font.pixelSize: 120
+            font.weight: 900
+            font.family: "Supermercado"
+            color: "#ffaab4"
 
             function updateTime() {
-                text = new Date().toLocaleString(Qt.locale(), Config.clockFormat);
+                text = new Date().toLocaleString(Qt.locale(), "hh:mm");
             }
         }
 
         Text {
             id: date
-            Layout.alignment: Config.clockAlign === "left" ? Qt.AlignLeft : (Config.clockAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
-            visible: Config.dateDisplay
-            font.pixelSize: Config.dateFontSize * Config.generalScale
-            font.family: Config.dateFontFamily
-            font.weight: Config.dateFontWeight
-            color: Config.dateColor
+            font.pixelSize: 25
+            font.weight: 600
+            font.family: "Supermercado"
+            color: "#ffaab4"
 
             function updateDate() {
-                text = new Date().toLocaleString(Qt.locale(), Config.dateFormat);
+                text = new Date().toLocaleString(Qt.locale(), "dddd, MMMM dd, yyyy");
             }
         }
+    }
 
-        Timer {
-            id: clockTimer
-            interval: 1000
-            repeat: true
-            running: true
-            onTriggered: {
-                time.updateTime();
-                date.updateDate();
-            }
-        }
-
-        Component.onDestruction: {
-            if (clockTimer) {
-                clockTimer.stop();
-            }
-        }
-
-
-        Component.onCompleted: {
-            lockScreen.alignItem(timePositioner, Config.clockPosition);
+    Timer {
+        id: clockTimer
+        interval: 1000
+        repeat: true
+        running: true
+        onTriggered: {
             time.updateTime();
             date.updateDate();
         }
     }
 
-    ColumnLayout {
-        id: messagePositioner
-        visible: Config.lockMessageDisplay
-        spacing: Config.lockMessageSpacing
-        Item {
-            Layout.alignment: Config.lockMessageAlign === "left" ? Qt.AlignLeft : (Config.lockMessageAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
-            Layout.preferredWidth: Config.lockMessageIconSize
-            Layout.preferredHeight: Config.lockMessageIconSize
-
-            Image {
-                id: lockIcon
-                source: Config.getIcon(Config.lockMessageIcon)
-                width: Config.lockMessageIconSize * Config.generalScale
-                height: width
-                sourceSize: Qt.size(width, height)
-                fillMode: Image.PreserveAspectFit
-                visible: false
-            }
-            MultiEffect {
-                source: lockIcon
-                anchors.fill: lockIcon
-                colorization: Config.lockMessagePaintIcon ? 1 : 0
-                colorizationColor: Config.lockMessageColor
-                visible: Config.lockMessageDisplayIcon
-                antialiasing: true
-            }
+    Component.onDestruction: {
+        if (clockTimer) {
+            clockTimer.stop();
         }
-
-        Text {
-            id: lockMessage
-            Layout.alignment: Config.lockMessageAlign === "left" ? Qt.AlignLeft : (Config.lockMessageAlign === "right" ? Qt.AlignRight : Qt.AlignHCenter)
-            font.pixelSize: Config.lockMessageFontSize * Config.generalScale
-            font.family: Config.lockMessageFontFamily
-            font.weight: Config.lockMessageFontWeight
-            color: Config.lockMessageColor
-            text: Config.lockMessageText
-        }
-
-
-        Component.onCompleted: lockScreen.alignItem(messagePositioner, Config.lockMessagePosition)
     }
 
-    function alignItem(item, pos) {
-        switch (pos) {
-        case "top-left":
-            item.anchors.top = lockScreen.top;
-            item.anchors.topMargin = Config.lockScreenPaddingTop;
-            item.anchors.left = lockScreen.left;
-            item.anchors.leftMargin = Config.lockScreenPaddingLeft;
-            break;
-        case "top-center":
-            item.anchors.top = lockScreen.top;
-            item.anchors.topMargin = Config.lockScreenPaddingTop;
-            item.anchors.horizontalCenter = lockScreen.horizontalCenter;
-            item.anchors.horizontalCenterOffset = Config.lockScreenPaddingLeft;
-            break;
-        case "top-right":
-            item.anchors.top = lockScreen.top;
-            item.anchors.topMargin = Config.lockScreenPaddingTop;
-            item.anchors.right = lockScreen.right;
-            item.anchors.rightMargin = Config.lockScreenPaddingRight;
-            break;
-        case "center-left":
-            item.anchors.verticalCenter = lockScreen.verticalCenter;
-            item.anchors.verticalCenterOffset = Config.lockScreenPaddingTop;
-            item.anchors.left = lockScreen.left;
-            item.anchors.leftMargin = Config.lockScreenPaddingLeft;
-            break;
-        case "center":
-            item.anchors.verticalCenter = lockScreen.verticalCenter;
-            item.anchors.verticalCenterOffset = Config.lockScreenPaddingTop;
-            item.anchors.horizontalCenter = lockScreen.horizontalCenter;
-            item.anchors.horizontalCenterOffset = Config.lockScreenPaddingLeft;
-            break;
-        case "center-right":
-            item.anchors.verticalCenter = lockScreen.verticalCenter;
-            item.anchors.verticalCenterOffset = Config.lockScreenPaddingTop;
-            item.anchors.right = lockScreen.right;
-            item.anchors.rightMargin = Config.lockScreenPaddingRight;
-            break;
-        case "bottom-left":
-            item.anchors.bottom = lockScreen.bottom;
-            item.anchors.bottomMargin = Config.lockScreenPaddingBottom;
-            item.anchors.left = lockScreen.left;
-            item.anchors.leftMargin = Config.lockScreenPaddingLeft;
-            break;
-        case "bottom-center":
-            item.anchors.bottom = lockScreen.bottom;
-            item.anchors.bottomMargin = Config.lockScreenPaddingBottom;
-            item.anchors.horizontalCenter = lockScreen.horizontalCenter;
-            item.anchors.horizontalCenterOffset = Config.lockScreenPaddingLeft;
-            break;
-        default:
-            item.anchors.bottom = lockScreen.bottom;
-            item.anchors.bottomMargin = Config.lockScreenPaddingBottom;
-            item.anchors.right = lockScreen.right;
-            item.anchors.rightMargin = Config.lockScreenPaddingRight;
-        }
+    Component.onCompleted: {
+        time.updateTime();
+        date.updateDate();
     }
 
     MouseArea {
-        id: lockScreenMouseArea
-        hoverEnabled: true
-        z: -1
-        anchors.fill: lockScreen
+        anchors.fill: parent
         onClicked: lockScreen.loginRequested()
     }
 

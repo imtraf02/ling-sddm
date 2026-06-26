@@ -9,5 +9,5 @@ Version=1.0.0
 Theme-Id=default
 Theme-API=2.0
 MainScript=Main.qml
-Screenshot=backgrounds/default.png
+Screenshot=assets/backgrounds/meow.png
 QtVersion=6

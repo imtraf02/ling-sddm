@@ -1,16 +1,17 @@
 import "."
 import QtQuick
-import SddmComponents
 import QtQuick.Effects
-import QtMultimedia
+import SddmComponents
 import "components"
 
 Item {
     id: root
     state: Config.lockScreenDisplay ? "lockState" : "loginState"
 
+    property real backgroundBlur: loginScreen.inputActive ? Config.inputBlurAmount : 0.0
+
     FontLoader {
-        source: "fonts/supermercado-one/SupermercadoOne-Regular.ttf"
+        source: "assets/fonts/supermercado-one/SupermercadoOne-Regular.ttf"
     }
 
     property bool capsLockOn: false
@@ -37,12 +38,6 @@ Item {
                 target: loginScreen.loginContainer
                 scale: 0.5
             }
-            PropertyChanges {
-                target: backgroundEffect
-                blurMax: Config.lockScreenBlur
-                brightness: Config.lockScreenBrightness
-                saturation: Config.lockScreenSaturation
-            }
         },
         State {
             name: "loginState"
@@ -58,12 +53,6 @@ Item {
                 target: loginScreen.loginContainer
                 scale: 1.0
             }
-            PropertyChanges {
-                target: backgroundEffect
-                blurMax: Config.loginScreenBlur
-                brightness: Config.loginScreenBrightness
-                saturation: Config.loginScreenSaturation
-            }
         }
     ]
     transitions: Transition {
@@ -71,18 +60,6 @@ Item {
         PropertyAnimation {
             duration: 150
             properties: "opacity"
-        }
-        PropertyAnimation {
-            duration: 400
-            properties: "blurMax"
-        }
-        PropertyAnimation {
-            duration: 400
-            properties: "brightness"
-        }
-        PropertyAnimation {
-            duration: 400
-            properties: "saturation"
         }
     }
 
@@ -93,50 +70,30 @@ Item {
         y: geometry.y
         width: geometry.width
         height: geometry.height
-        
+
         Rectangle {
             anchors.fill: parent
             color: "black"
         }
 
-        property string tsource: root.state === "lockState" ? Config.lockScreenBackground : Config.loginScreenBackground
-
-        MediaPlayer {
-            id: mediaPlayer
-            source: {
-                if (!mainFrame.tsource || mainFrame.tsource.toString().length === 0) return "";
-                var src = mainFrame.tsource.startsWith("/") || mainFrame.tsource.startsWith("file://") || mainFrame.tsource.startsWith("qrc:/") 
-                    ? mainFrame.tsource 
-                    : Qt.resolvedUrl("./backgrounds/" + mainFrame.tsource);
-                return src;
-            }
-            loops: MediaPlayer.Infinite
-            videoOutput: backgroundVideoOutput
-            audioOutput: AudioOutput {
-                muted: true
-            }
-            autoPlay: true
-            Component.onCompleted: play()
-        }
-
-        VideoOutput {
-            id: backgroundVideoOutput
+        Image {
+            id: backgroundImage
+            source: "assets/backgrounds/meow.png"
             anchors.fill: parent
-            fillMode: {
-                if (Config.backgroundFillMode === "stretch") return VideoOutput.Stretch;
-                if (Config.backgroundFillMode === "fit") return VideoOutput.PreserveAspectFit;
-                return VideoOutput.PreserveAspectCrop;
-            }
+            fillMode: Image.PreserveAspectCrop
         }
 
         MultiEffect {
-            // Background effects
             id: backgroundEffect
-            source: backgroundVideoOutput
+            source: backgroundImage
             anchors.fill: parent
-            blurEnabled: blurMax > 0
-            blur: blurMax > 0 ? 1.0 : 0.0
-            autoPaddingEnabled: false
+            blurEnabled: root.backgroundBlur > 0
+            blur: root.backgroundBlur
+
+            Behavior on blur {
+                enabled: Config.enableAnimations
+                NumberAnimation { duration: 300 }
+            }
         }
 
         Item {
@@ -146,7 +103,7 @@ Item {
 
             LockScreen {
                 id: lockScreen
-                z: root.state === "lockState" ? 2 : 1 // Fix tooltips from the login screen showing up on top of the lock screen.
+                z: root.state === "lockState" ? 2 : 1
                 anchors.fill: parent
                 focus: root.state === "lockState"
                 enabled: root.state === "lockState"

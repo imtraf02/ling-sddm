@@ -17,30 +17,30 @@ Item {
     property bool enabled: true
     property int inputMethodHints: Qt.ImhNone
 
-    width: Config.passwordInputWidth * Config.generalScale
-    height: Config.passwordInputHeight * Config.generalScale
+    width: 180
+    height: 45
 
     TextField {
         id: textField
         anchors.fill: parent
         inputMethodHints: input.inputMethodHints
-        color: Config.passwordInputContentColor
+        color: "#ffaab4"
         enabled: input.enabled
         echoMode: input.isPassword ? TextInput.Password : TextInput.Normal
-        passwordCharacter: Config.passwordInputMaskedCharacter
+        passwordCharacter: "\u25cf"
         activeFocusOnTab: true
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter
-        font.family: Config.passwordInputFontFamily
-        font.pixelSize: Math.max(8, Config.passwordInputFontSize * Config.generalScale)
+        font.family: "system"
+        font.pixelSize: 18
         background: Rectangle {
             anchors.fill: parent
-            color: Config.passwordInputBackgroundColor
-            opacity: Config.passwordInputBackgroundOpacity
-            topLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
-            bottomLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
-            topRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
-            bottomRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
+            color: "#000000"
+            opacity: 0.0
+            topLeftRadius: 10
+            bottomLeftRadius: 10
+            topRightRadius: 10
+            bottomRightRadius: 10
         }
         leftPadding: placeholderLabel.x
         rightPadding: 10
@@ -48,24 +48,24 @@ Item {
 
         Rectangle {
             anchors.fill: parent
-            border.width: Config.passwordInputBorderSize * Config.generalScale
-            border.color: Config.passwordInputBorderColor
+            border.width: 2
+            border.color: "#ffaab4"
             color: "transparent"
-            topLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
-            bottomLeftRadius: Config.passwordInputBorderRadiusLeft * Config.generalScale
-            topRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
-            bottomRightRadius: input.splitBorderRadius ? Config.passwordInputBorderRadiusRight * Config.generalScale : Config.passwordInputBorderRadiusLeft * Config.generalScale
+            topLeftRadius: 10
+            bottomLeftRadius: 10
+            topRightRadius: input.splitBorderRadius ? 0 : 10
+            bottomRightRadius: input.splitBorderRadius ? 0 : 10
         }
 
         Row {
             anchors.fill: parent
             spacing: 0
-            leftPadding: Config.passwordInputDisplayIcon ? 2 : 10
+            leftPadding: input.icon ? 2 : 10
 
             Rectangle {
                 id: iconContainer
                 color: "transparent"
-                visible: Config.passwordInputDisplayIcon
+                visible: input.icon !== ""
                 height: parent.height
                 width: height
 
@@ -73,13 +73,12 @@ Item {
                     id: icon
                     source: input.icon
                     anchors.centerIn: parent
-                    width: Math.max(1, Config.passwordInputIconSize * Config.generalScale)
-                    height: width
+                    width: 24
+                    height: 24
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit
                     opacity: input.enabled ? 1.0 : 0.3
                     Behavior on opacity {
-                        enabled: Config.enableAnimations
                         NumberAnimation {
                             duration: 250
                         }

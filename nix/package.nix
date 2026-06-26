@@ -27,9 +27,8 @@ stdenvNoCC.mkDerivation {
   };
 
   # Qt packages must be propagated so they're available at runtime
-  # for sddm-greeter-qt6 to find QML modules (QtMultimedia, etc.).
+  # for sddm-greeter-qt6 to find QML modules.
   propagatedBuildInputs = [
-    kdePackages.qtmultimedia
     kdePackages.qtsvg
     kdePackages.qtvirtualkeyboard
     kdePackages.qt5compat
@@ -47,7 +46,7 @@ stdenvNoCC.mkDerivation {
 
     # Install fonts to the standard location
     mkdir -p $out/share/fonts
-    cp -r fonts/supermercado-one $out/share/fonts/
+    cp -r ${basePath}/assets/fonts/supermercado-one $out/share/fonts/
   '';
 
   meta = with lib; {

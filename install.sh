@@ -41,17 +41,17 @@ install_dependencies() {
     echo -e "${CYAN}${BOLD}  ->${RESET} Detecting package manager and installing dependencies..."
     
     if command_exists pacman; then
-        sudo pacman -S --needed --noconfirm sddm qt6-svg qt6-virtualkeyboard qt6-multimedia-ffmpeg
+        sudo pacman -S --needed --noconfirm sddm qt6-svg qt6-virtualkeyboard
     elif command_exists dnf; then
-        sudo dnf install -y sddm qt6-qtsvg qt6-qtvirtualkeyboard qt6-qtmultimedia
+        sudo dnf install -y sddm qt6-qtsvg qt6-qtvirtualkeyboard
     elif command_exists apt; then
         sudo apt update
-        sudo apt install -y sddm qml6-module-qtquick-layouts qml6-module-qtquick-controls qml6-module-qtmultimedia qml6-module-qtsvg qml6-module-qtvirtualkeyboard libqt6multimedia6-ffmpeg || \
+        sudo apt install -y sddm qml6-module-qtquick-layouts qml6-module-qtquick-controls qml6-module-qtsvg qml6-module-qtvirtualkeyboard || \
         echo -e "${YELLOW}Warning: Some QT6 packages might not be available. Please ensure QT 6.5+ is installed.${RESET}"
     elif command_exists zypper; then
-        sudo zypper install -y sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports qt6-multimedia qt6-multimedia-imports
+        sudo zypper install -y sddm-qt6 libQt6Svg6 qt6-virtualkeyboard qt6-virtualkeyboard-imports
     elif command_exists xbps-install; then
-        sudo xbps-install -Sy sddm qt6-svg qt6-virtualkeyboard qt6-multimedia
+        sudo xbps-install -Sy sddm qt6-svg qt6-virtualkeyboard
     else
         echo -e "${YELLOW}Unknown package manager. Please ensure SDDM (QT6) and its dependencies are installed manually.${RESET}"
     fi
@@ -70,10 +70,19 @@ copy_theme() {
     sudo rm -f "${THEMES_DIR}/${THEME_NAME}/flake.nix"
     sudo rm -f "${THEMES_DIR}/${THEME_NAME}/flake.lock"
 
+    # Create theme.conf
+    if [ ! -f "${THEMES_DIR}/${THEME_NAME}/theme.conf" ]; then
+        echo "[General]" | sudo tee "${THEMES_DIR}/${THEME_NAME}/theme.conf" > /dev/null
+    fi
+
     # Update theme.conf if custom background is provided
     if [ -n "$CUSTOM_BACKGROUND" ]; then
         echo -e "${CYAN}${BOLD}  ->${RESET} Setting custom background to ${CUSTOM_BACKGROUND}..."
-        sudo sed -i "s|^background =.*|background = \"${CUSTOM_BACKGROUND}\"|" "${THEMES_DIR}/${THEME_NAME}/theme.conf"
+        if grep -q "^background" "${THEMES_DIR}/${THEME_NAME}/theme.conf"; then
+            sudo sed -i "s|^background =.*|background = ${CUSTOM_BACKGROUND}|" "${THEMES_DIR}/${THEME_NAME}/theme.conf"
+        else
+            echo "background = ${CUSTOM_BACKGROUND}" | sudo tee -a "${THEMES_DIR}/${THEME_NAME}/theme.conf" > /dev/null
+        fi
     fi
 }
 
@@ -81,8 +90,8 @@ copy_theme() {
 install_fonts() {
     echo -e "${CYAN}${BOLD}  ->${RESET} Installing fonts..."
     sudo mkdir -p "${FONTS_DIR}/lingSDDM"
-    if [ -d "${SCRIPT_PATH}/fonts" ]; then
-        sudo cp -rf "${SCRIPT_PATH}/fonts"/* "${FONTS_DIR}/lingSDDM/"
+    if [ -d "${SCRIPT_PATH}/assets/fonts" ]; then
+        sudo cp -rf "${SCRIPT_PATH}/assets/fonts"/* "${FONTS_DIR}/lingSDDM/"
         if command_exists fc-cache; then
             sudo fc-cache -f >/dev/null
         fi
