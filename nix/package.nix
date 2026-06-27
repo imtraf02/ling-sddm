@@ -23,6 +23,7 @@ stdenvNoCC.mkDerivation {
       (maybeMissing ../README.md)
       (maybeMissing ../flake.lock)
       (maybeMissing ../.git)
+      (maybeMissing ../result)
     ]);
   };
 
