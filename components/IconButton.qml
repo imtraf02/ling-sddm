@@ -11,34 +11,57 @@ Item {
     property bool active: false
     readonly property bool isActive: active || focus || mouseArea.pressed || mouseArea.containsMouse
     property string icon: ""
-    property int iconSize: 26
-    property color contentColor: "#ffaab4"
-    property color activeContentColor: "#000000"
+    property int iconSize: 16
+    property color contentColor: "#12091c"
+    property color activeContentColor: "#ffffff"
     property string label: ""
     property bool showLabel: true
     property string fontFamily: "system"
     property int fontWeight: 400
-    property int fontSize: 12
-    property color backgroundColor: "#000000"
+    property int fontSize: 11
+    property color backgroundColor: "#ffffff"
     property double backgroundOpacity: 0.0
-    property color activeBackgroundColor: "#ffaab4"
-    property double activeBackgroundOpacity: 1.0
+    property color activeBackgroundColor: "#12091c"
+    property double activeBackgroundOpacity: 0.7
+    property color glassColor1: "#4DCBA6F7"
+    property color glassColor2: "#2089B4FA"
     property string tooltipText: ""
-    property int borderRadius: 10
+    property int borderRadius: 8
     property int borderRadiusLeft: borderRadius
     property int borderRadiusRight: borderRadius
-    property int borderSize: 2
-    property color borderColor: "#ffaab4"
+    property int borderSize: 1
+    property color borderColor: iconButton.isActive ? "#6CCBA6F7" : "#2512091c"
     property int preferredWidth: -1
 
     width: preferredWidth !== -1 ? preferredWidth : buttonContentRow.width
-    height: 45
+    height: 36
 
     Rectangle {
         id: buttonBackground
         anchors.fill: parent
         color: iconButton.isActive ? iconButton.activeBackgroundColor : iconButton.backgroundColor
         opacity: iconButton.isActive ? iconButton.activeBackgroundOpacity : iconButton.backgroundOpacity
+        topLeftRadius: iconButton.borderRadiusLeft
+        topRightRadius: iconButton.borderRadiusRight
+        bottomLeftRadius: iconButton.borderRadiusLeft
+        bottomRightRadius: iconButton.borderRadiusRight
+
+        Behavior on opacity {
+            NumberAnimation {
+                duration: 250
+            }
+        }
+    }
+
+    Rectangle {
+        id: glassOverlay
+        anchors.fill: parent
+        visible: iconButton.isActive
+        opacity: iconButton.isActive ? 0.65 : 0
+        gradient: Gradient {
+            GradientStop { position: 0.0; color: iconButton.glassColor1 }
+            GradientStop { position: 1.0; color: iconButton.glassColor2 }
+        }
         topLeftRadius: iconButton.borderRadiusLeft
         topRightRadius: iconButton.borderRadiusRight
         bottomLeftRadius: iconButton.borderRadiusLeft
@@ -159,15 +182,18 @@ Item {
                 font.family: "system"
                 font.pixelSize: 11
                 text: iconButton.tooltipText
-                color: "#ffaab4"
+                color: "#cba6f7"
             }
 
             background: Rectangle {
                 implicitWidth: tooltipTextElement.implicitWidth + (toolTipControl.leftPadding + toolTipControl.rightPadding)
                 implicitHeight: tooltipTextElement.implicitHeight + (toolTipControl.topPadding + toolTipControl.bottomPadding)
-                color: "#000000"
-                opacity: 1.0
-                border.width: 0
+                color: "#12091c"
+                opacity: 0.85
+                border {
+                    color: "#2512091c"
+                    width: 1
+                }
                 radius: 5
             }
         }

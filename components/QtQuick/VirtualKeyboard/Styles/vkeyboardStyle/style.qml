@@ -21,18 +21,18 @@ KeyboardStyle {
 
     readonly property string inputLocale: InputContext.locale
     property color primaryColor: "#8c90c2"
-    property color primaryLightColor: "#ffaab4"
-    property color primaryDarkColor: "#000000"
-    property color textOnPrimaryColor: "#ffaab4"
+    property color primaryLightColor: "#2012091c"
+    property color primaryDarkColor: "#12091c"
+    property color textOnPrimaryColor: "#12091c"
     property color secondaryColor: "#303030"
     property color secondaryLightColor: "#8c90c2"
     property color secondaryDarkColor: "#8c90c2"
-    property color textOnSecondaryColor: "#ffaab4"
+    property color textOnSecondaryColor: "#12091c"
 
-    property color normalKeyBackgroundColor: primaryDarkColor
-    property color highlightedKeyBackgroundColor: primaryLightColor
-    property real highlightedKeyBackgroundOpacity: 0.0
-    property real normalKeyBackgroundOpacity: 1.0
+    property color normalKeyBackgroundColor: "#ffffff"
+    property color highlightedKeyBackgroundColor: "#12091c"
+    property real highlightedKeyBackgroundOpacity: 1.0
+    property real normalKeyBackgroundOpacity: 0.2
     property color capsLockKeyAccentColor: secondaryColor
     property color modeKeyAccentColor: textOnPrimaryColor
     property color keyTextColor: textOnPrimaryColor
@@ -96,8 +96,8 @@ KeyboardStyle {
     keyboardBackground: Rectangle {
         color: "transparent"
         border {
-            width: 2
-            color: "#ffaab4"
+            width: 1
+            color: vkeyboardStyle.primaryLightColor
         }
         radius: 10
 
@@ -108,8 +108,8 @@ KeyboardStyle {
         Rectangle {
             z: parent.z - 1
             anchors.fill: parent
-            color: "#000000"
-            opacity: 1.0
+            color: "#ffffff"
+            opacity: 0.65
             radius: 10
         }
     }
@@ -143,7 +143,7 @@ KeyboardStyle {
                 color: "transparent"
                 border {
                     width: 2
-                    color: "#ffaab4"
+                    color: vkeyboardStyle.primaryLightColor
                 }
                 radius: parent.radius
             }
@@ -256,7 +256,7 @@ KeyboardStyle {
                 color: "transparent"
                 border {
                     width: 2
-                    color: "#ffaab4"
+                    color: vkeyboardStyle.primaryLightColor
                 }
                 radius: parent.radius
             }
@@ -336,7 +336,7 @@ KeyboardStyle {
                 color: "transparent"
                 border {
                     width: 2
-                    color: "#ffaab4"
+                    color: vkeyboardStyle.primaryLightColor
                 }
                 radius: parent.radius
             }
@@ -416,7 +416,7 @@ KeyboardStyle {
                 color: "transparent"
                 border {
                     width: 2
-                    color: "#ffaab4"
+                    color: vkeyboardStyle.primaryLightColor
                 }
                 radius: parent.radius
             }
@@ -536,7 +536,7 @@ KeyboardStyle {
                 color: "transparent"
                 border {
                     width: 2
-                    color: "#ffaab4"
+                    color: vkeyboardStyle.primaryLightColor
                 }
                 radius: parent.radius
             }
@@ -622,7 +622,7 @@ KeyboardStyle {
                 color: "transparent"
                 border {
                     width: 2
-                    color: "#ffaab4"
+                    color: vkeyboardStyle.primaryLightColor
                 }
                 radius: parent.radius
             }
@@ -732,7 +732,7 @@ KeyboardStyle {
                 color: "transparent"
                 border {
                     width: 2
-                    color: "#ffaab4"
+                    color: vkeyboardStyle.primaryLightColor
                 }
                 radius: parent.radius
             }
@@ -802,7 +802,7 @@ KeyboardStyle {
                 color: "transparent"
                 border {
                     width: 2
-                    color: "#ffaab4"
+                    color: vkeyboardStyle.primaryLightColor
                 }
                 radius: parent.radius
             }
@@ -878,7 +878,7 @@ KeyboardStyle {
                 color: "transparent"
                 border {
                     width: 2
-                    color: "#ffaab4"
+                    color: vkeyboardStyle.primaryLightColor
                 }
                 radius: parent.radius
             }
@@ -967,7 +967,7 @@ KeyboardStyle {
                 color: "transparent"
                 border {
                     width: 2
-                    color: "#ffaab4"
+                    color: vkeyboardStyle.primaryLightColor
                 }
                 radius: parent.radius
             }

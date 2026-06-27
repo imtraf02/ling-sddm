@@ -5,33 +5,49 @@ Item {
     id: lockScreen
     signal loginRequested
 
-    ColumnLayout {
-        anchors.left: parent.left
-        anchors.leftMargin: 150
-        anchors.verticalCenter: parent.verticalCenter
-        spacing: -15
-
-        Text {
-            id: time
-            font.pixelSize: 120
-            font.weight: 900
-            font.family: "Supermercado"
-            color: "#ffaab4"
-
-            function updateTime() {
-                text = new Date().toLocaleString(Qt.locale(), "hh:mm");
-            }
+    Rectangle {
+        id: clockCard
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 80
+        width: clockLayout.implicitWidth + 60
+        height: clockLayout.implicitHeight + 30
+        color: "#59ffffff"
+        radius: 16
+        border {
+            color: "#2012091c"
+            width: 1
         }
 
-        Text {
-            id: date
-            font.pixelSize: 25
-            font.weight: 600
-            font.family: "Supermercado"
-            color: "#ffaab4"
+        ColumnLayout {
+            id: clockLayout
+            anchors.centerIn: parent
+            spacing: 5
 
-            function updateDate() {
-                text = new Date().toLocaleString(Qt.locale(), "dddd, MMMM dd, yyyy");
+            Text {
+                id: time
+                font.pixelSize: 90
+                font.weight: 900
+                font.family: "Supermercado"
+                color: "#12091c"
+                Layout.alignment: Qt.AlignHCenter
+
+                function updateTime() {
+                    text = new Date().toLocaleString(Qt.locale(), "hh:mm");
+                }
+            }
+
+            Text {
+                id: date
+                font.pixelSize: 18
+                font.weight: 600
+                font.family: "Supermercado"
+                color: "#12091c"
+                Layout.alignment: Qt.AlignHCenter
+
+                function updateDate() {
+                    text = new Date().toLocaleString(Qt.locale(), "dddd, MMMM dd, yyyy");
+                }
             }
         }
     }

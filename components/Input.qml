@@ -17,14 +17,14 @@ Item {
     property bool enabled: true
     property int inputMethodHints: Qt.ImhNone
 
-    width: 180
-    height: 45
+    width: 160
+    height: 36
 
     TextField {
         id: textField
         anchors.fill: parent
         inputMethodHints: input.inputMethodHints
-        color: "#ffaab4"
+        color: "#12091c"
         enabled: input.enabled
         echoMode: input.isPassword ? TextInput.Password : TextInput.Normal
         passwordCharacter: "\u25cf"
@@ -32,15 +32,15 @@ Item {
         selectByMouse: true
         verticalAlignment: TextField.AlignVCenter
         font.family: "system"
-        font.pixelSize: 18
+        font.pixelSize: 13
         background: Rectangle {
             anchors.fill: parent
-            color: "#000000"
-            opacity: 0.0
-            topLeftRadius: 10
-            bottomLeftRadius: 10
-            topRightRadius: 10
-            bottomRightRadius: 10
+            color: "#ffffff"
+            opacity: 0.15
+            topLeftRadius: 8
+            bottomLeftRadius: 8
+            topRightRadius: 8
+            bottomRightRadius: 8
         }
         leftPadding: placeholderLabel.x
         rightPadding: 10
@@ -49,12 +49,12 @@ Item {
         Rectangle {
             anchors.fill: parent
             border.width: 2
-            border.color: "#ffaab4"
+            border.color: textField.activeFocus ? "#8012091c" : "#2512091c"
             color: "transparent"
-            topLeftRadius: 10
-            bottomLeftRadius: 10
-            topRightRadius: input.splitBorderRadius ? 0 : 10
-            bottomRightRadius: input.splitBorderRadius ? 0 : 10
+            topLeftRadius: 8
+            bottomLeftRadius: 8
+            topRightRadius: input.splitBorderRadius ? 0 : 8
+            bottomRightRadius: input.splitBorderRadius ? 0 : 8
         }
 
         Row {
@@ -73,8 +73,8 @@ Item {
                     id: icon
                     source: input.icon
                     anchors.centerIn: parent
-                    width: 24
-                    height: 24
+                    width: 16
+                    height: 16
                     sourceSize: Qt.size(width, height)
                     fillMode: Image.PreserveAspectFit
                     opacity: input.enabled ? 1.0 : 0.3
@@ -101,8 +101,8 @@ Item {
                 padding: 0
                 visible: textField.text.length === 0 && (!textField.preeditText || textField.preeditText.length === 0)
                 text: input.placeholder
-                color: textField.color
-                font.pixelSize: Math.max(8, textField.font.pixelSize || 12)
+                color: "#6012091c"
+                font.pixelSize: Math.max(8, textField.font.pixelSize || 10)
                 font.family: textField.font.family || "sans-serif"
                 horizontalAlignment: Text.AlignLeft
                 verticalAlignment: textField.verticalAlignment

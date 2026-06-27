@@ -23,12 +23,12 @@ ColumnLayout {
         width: Layout.preferredWidth
         enabled: sddm.canSuspend
         icon: Config.getIcon("power-suspend.svg")
-        contentColor: "#ffaab4"
-        activeContentColor: "#000000"
+        contentColor: "#12091c"
+        activeContentColor: "#ffffff"
         fontFamily: "system"
         backgroundColor: "transparent"
-        activeBackgroundColor: "#ffaab4"
-        activeBackgroundOpacity: 1.0
+        activeBackgroundColor: "#12091c"
+        activeBackgroundOpacity: 0.7
         iconSize: 16
         fontSize: 11
         onClicked: {
@@ -52,12 +52,12 @@ ColumnLayout {
         width: Layout.preferredWidth
         enabled: sddm.canReboot
         icon: Config.getIcon("power-reboot.svg")
-        contentColor: "#ffaab4"
-        activeContentColor: "#000000"
+        contentColor: "#12091c"
+        activeContentColor: "#ffffff"
         fontFamily: "system"
         backgroundColor: "transparent"
-        activeBackgroundColor: "#ffaab4"
-        activeBackgroundOpacity: 1.0
+        activeBackgroundColor: "#12091c"
+        activeBackgroundOpacity: 0.7
         iconSize: 16
         fontSize: 11
         onClicked: {
@@ -81,12 +81,12 @@ ColumnLayout {
         width: Layout.preferredWidth
         enabled: sddm.canPowerOff
         icon: Config.getIcon("power.svg")
-        contentColor: "#ffaab4"
-        activeContentColor: "#000000"
+        contentColor: "#12091c"
+        activeContentColor: "#ffffff"
         fontFamily: "system"
         backgroundColor: "transparent"
-        activeBackgroundColor: "#ffaab4"
-        activeBackgroundOpacity: 1.0
+        activeBackgroundColor: "#12091c"
+        activeBackgroundOpacity: 0.7
         iconSize: 16
         fontSize: 11
         onClicked: {

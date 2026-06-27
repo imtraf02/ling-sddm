@@ -15,7 +15,7 @@ InputPanel {
         VirtualKeyboardSettings.layout = "symbols";
     }
 
-    property point loginLayoutPosition: loginContainer && loginLayout ? loginContainer.mapToGlobal(loginLayout.x, loginLayout.y) : Qt.point(0, 0)
+    property point loginLayoutPosition: loginContainer && loginArea ? loginContainer.mapToGlobal(loginArea.x, loginArea.y) : Qt.point(0, 0)
     property bool vKeyboardMoved: false
 
     x: (parent.width - inputPanel.width) / 2

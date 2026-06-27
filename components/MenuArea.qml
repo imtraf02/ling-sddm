@@ -11,20 +11,21 @@ Item {
         IconButton {
             id: sessionButton
             property bool showLabel: true
-            preferredWidth: showLabel ? 100 : 45
-            height: 45
-            iconSize: 24
+            preferredWidth: showLabel ? 100 : 36
+            height: 36
+            iconSize: 16
             fontSize: 10
             enabled: loginScreen.state === "normal" || popup.visible
             active: popup.visible
-            contentColor: "#ffaab4"
-            activeContentColor: "#000000"
-            borderRadius: 5
-            borderSize: 0
-            backgroundColor: "#000000"
-            backgroundOpacity: 0
-            activeBackgroundColor: "#000000"
-            activeBackgroundOpacity: 0
+            contentColor: "#12091c"
+            activeContentColor: "#ffffff"
+            borderRadius: 6
+            borderSize: 1
+            borderColor: active || focus ? "#6CCBA6F7" : "#2512091c"
+            backgroundColor: "#ffffff"
+            backgroundOpacity: 0.15
+            activeBackgroundColor: "#12091c"
+            activeBackgroundOpacity: 0.7
             fontFamily: "system"
             activeFocusOnTab: true
             focus: false
@@ -42,9 +43,9 @@ Item {
                 parent: sessionButton
                 padding: 5
                 background: Rectangle {
-                    color: "#000000"
-                    opacity: 1.0
-                    radius: 5
+                    color: "#ffffff"
+                    opacity: 0.65
+                    radius: 6
 
                     Rectangle {
                         anchors.fill: parent
@@ -52,8 +53,8 @@ Item {
                         radius: parent.radius
                         color: "transparent"
                         border {
-                            color: "#ffaab4"
-                            width: 2
+                            color: "#2012091c"
+                            width: 1
                         }
                     }
                 }
@@ -103,20 +104,21 @@ Item {
         IconButton {
             id: keyboardButton
 
-            height: 45
-            width: 45
+            height: 36
+            width: 36
             icon: Config.getIcon("keyboard.svg")
-            iconSize: 24
-            backgroundColor: "#000000"
-            backgroundOpacity: 0
-            activeBackgroundColor: "#000000"
-            activeBackgroundOpacity: 0
-            contentColor: "#ffaab4"
-            activeContentColor: "#000000"
+            iconSize: 16
+            borderSize: 1
+            borderColor: active || focus ? "#6CCBA6F7" : "#2512091c"
+            backgroundColor: "#ffffff"
+            backgroundOpacity: 0.15
+            activeBackgroundColor: "#12091c"
+            activeBackgroundOpacity: 0.7
+            contentColor: "#12091c"
+            activeContentColor: "#ffffff"
             active: showKeyboard
             fontFamily: "system"
-            borderRadius: 5
-            borderSize: 0
+            borderRadius: 6
             enabled: loginScreen.showKeyboard || loginScreen.state === "normal"
             activeFocusOnTab: true
             focus: false
@@ -133,20 +135,21 @@ Item {
         IconButton {
             id: powerButton
 
-            height: 45
-            width: 45
+            height: 36
+            width: 36
             icon: Config.getIcon("power.svg")
-            iconSize: 24
-            contentColor: "#ffaab4"
-            activeContentColor: "#000000"
+            iconSize: 16
+            contentColor: "#12091c"
+            activeContentColor: "#ffffff"
             fontFamily: "system"
             active: popup.visible
-            borderRadius: 5
-            borderSize: 0
-            backgroundColor: "#000000"
-            backgroundOpacity: 0
-            activeBackgroundColor: "#000000"
-            activeBackgroundOpacity: 0
+            borderRadius: 6
+            borderSize: 1
+            borderColor: active || focus ? "#6CCBA6F7" : "#2512091c"
+            backgroundColor: "#ffffff"
+            backgroundOpacity: 0.15
+            activeBackgroundColor: "#12091c"
+            activeBackgroundOpacity: 0.7
             enabled: loginScreen.state === "normal" || popup.visible
             activeFocusOnTab: true
             focus: false
@@ -159,9 +162,9 @@ Item {
                 id: popup
                 parent: powerButton
                 background: Rectangle {
-                    color: "#000000"
-                    opacity: 1.0
-                    radius: 5
+                    color: "#ffffff"
+                    opacity: 0.65
+                    radius: 6
 
                     Rectangle {
                         anchors.fill: parent
@@ -169,8 +172,8 @@ Item {
                         radius: parent.radius
                         color: "transparent"
                         border {
-                            color: "#ffaab4"
-                            width: 2
+                            color: "#2012091c"
+                            width: 1
                         }
                     }
                 }
@@ -215,12 +218,12 @@ Item {
 
         height: childrenRect.height
         width: childrenRect.width
-        spacing: 10
+        spacing: 8
 
         anchors {
             bottom: parent.bottom
             horizontalCenter: parent.horizontalCenter
-            bottomMargin: 0
+            bottomMargin: 30
         }
     }
 

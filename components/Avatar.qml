@@ -8,7 +8,7 @@ Rectangle {
     property string source: ""
     property bool active: false
     property int squareRadius: (shape == "circle") ? width : 30
-    property color strokeColor: "#ffaab4"
+    property color strokeColor: "#12091c"
     property int strokeSize: 3
     property string tooltipText: ""
     property bool showTooltip: false
@@ -146,15 +146,18 @@ Rectangle {
                 font.family: "system"
                 font.pixelSize: 11
                 text: avatar.tooltipText
-                color: "#ffaab4"
+                color: "#cba6f7"
             }
 
             background: Rectangle {
                 implicitWidth: tooltipTextElement.implicitWidth + (toolTipControl.leftPadding + toolTipControl.rightPadding)
                 implicitHeight: tooltipTextElement.implicitHeight + (toolTipControl.topPadding + toolTipControl.bottomPadding)
-                color: "#000000"
-                opacity: 1.0
-                border.width: 0
+                color: "#12091c"
+                opacity: 0.85
+                border {
+                    color: "#2512091c"
+                    width: 1
+                }
                 radius: 5
             }
         }

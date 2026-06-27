@@ -6,6 +6,7 @@ Item {
     id: spinnerContainer
     width: Math.max(spinner.width, spinnerText.width)
     height: spinner.height + 5 + spinnerText.height
+    property color color: "#cba6f7"
 
     Behavior on opacity {
         NumberAnimation {
@@ -49,7 +50,7 @@ Item {
         source: spinner
         anchors.fill: spinner
         colorization: 1
-        colorizationColor: "#ffaab4"
+        colorizationColor: spinnerContainer.color
         opacity: 1.0
         antialiasing: true
     }
@@ -66,7 +67,7 @@ Item {
     Text {
         id: spinnerText
         text: "Logging in"
-        color: "#ffaab4"
+        color: spinnerContainer.color
         font.pixelSize: 14
         font.weight: 600
         font.family: "Supermercado"

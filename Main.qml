@@ -8,7 +8,7 @@ Item {
     id: root
     state: Config.lockScreenDisplay ? "lockState" : "loginState"
 
-    property real backgroundBlur: loginScreen.inputActive ? Config.inputBlurAmount : 0.0
+    property real backgroundBlur: root.state === "loginState" ? Config.inputBlurAmount : 0.0
 
     FontLoader {
         source: "assets/fonts/supermercado-one/SupermercadoOne-Regular.ttf"

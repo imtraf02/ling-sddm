@@ -43,7 +43,7 @@ ColumnLayout {
                 id: scrollbarBackground
                 implicitWidth: 5
                 radius: 5
-                color: "#ffaab4"
+                color: "#cba6f7"
                 opacity: 1.0
             }
         }
@@ -66,7 +66,7 @@ ColumnLayout {
 
             Rectangle {
                 anchors.fill: parent
-                color: "#ffaab4"
+                color: "#12091c"
                 opacity: index === selector.currentSessionIndex ? 1.0 : (itemMouseArea.containsMouse ? 1.0 : 0.0)
                 radius: 5
             }
@@ -95,7 +95,7 @@ ColumnLayout {
                         source: sessionIcon
                         anchors.fill: sessionIcon
                         colorization: 1
-                        colorizationColor: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? "#000000" : "#ffaab4"
+                        colorizationColor: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? "#ffffff" : "#12091c"
                         antialiasing: true
                     }
                 }
@@ -111,7 +111,7 @@ ColumnLayout {
                         elide: Text.ElideRight
                         width: parent.width - 5
                         text: name
-                        color: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? "#000000" : "#ffaab4"
+                        color: index === selector.currentSessionIndex || itemMouseArea.containsMouse ? "#ffffff" : "#12091c"
                         font.pixelSize: 11
                         font.family: "system"
                     }
